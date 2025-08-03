@@ -1,0 +1,10 @@
+from django.urls import path
+
+from . import views
+#access view file from this import
+
+urlpatterns = [
+
+    path('',view.home,name='home'),#Url for home page (view.home is file name) 
+    # (anytime you create webpage you need URL like this and must create view and template with html file)
+]
