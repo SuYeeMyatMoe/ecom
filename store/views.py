@@ -6,3 +6,9 @@ def home(request):#wanna pass the request in here
     #home.html need to direct the template directiory in store app so create new folder (I named folder as templates to store all html templates)
     # the running will stop if terminal is close
     #if there is no error, can run in localhost:8000
+
+    #In store must have at least 4 model for dbs
+    #category
+    #product
+    #cus
+    #order
