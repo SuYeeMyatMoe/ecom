@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(store.urls))#will include new url that links to url in store app 
+    path('',include('store.urls'))#will include new url that links to url in store app 
 ]
