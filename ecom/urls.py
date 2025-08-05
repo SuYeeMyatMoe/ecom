@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import settings
+#This imports your project’s settings module from the same directory (settings object contains all configuration values from settings.py (like MEDIA_URL, MEDIA_ROOT, DEBUG, etc.)
+
+from django.conf.urls.static import static#import to get static file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('store.urls'))#will include new url that links to url in store app 
+    + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)#and also get media static file from URL in user uploading images
 ]
