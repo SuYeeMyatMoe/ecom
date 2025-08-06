@@ -22,8 +22,8 @@ from . import settings
 from django.conf.urls.static import static#import to get static file
 
 urlpatterns = [
-    path('', include('store.urls')),  # include store app URLs
+    path('admin/', admin.site.urls),  # ✅ This is missing in your file
+    path('', include('store.urls')),  # Your store app
 ]
 
-# Add static URL patterns
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
