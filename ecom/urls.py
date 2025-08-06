@@ -22,7 +22,8 @@ from . import settings
 from django.conf.urls.static import static#import to get static file
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('store.urls'))#will include new url that links to url in store app 
-    + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)#and also get media static file from URL in user uploading images
+    path('', include('store.urls')),  # include store app URLs
 ]
+
+# Add static URL patterns
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
