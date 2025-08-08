@@ -44,3 +44,6 @@ class Order(models.Model):
     
     #make migration in terminal with this line (after cd and local )
     #  python manage.py makemigrations
+
+    #migration folder is created so will create a migration with terminal again
+    #python manage.py migrate (OK is replied so it works)

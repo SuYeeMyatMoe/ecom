@@ -4,7 +4,7 @@ import datetime
 import django.db.models.deletion
 from django.db import migrations, models
 
-
+#migration folder is created so will create a migration with terminal again
 class Migration(migrations.Migration):
 
     initial = True
