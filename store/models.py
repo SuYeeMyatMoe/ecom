@@ -41,3 +41,6 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product
+    
+    #make migration in terminal with this line (after cd and local )
+    #  python manage.py makemigrations
