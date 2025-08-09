@@ -7,4 +7,7 @@ admin.site.register(Customer)
 admin.site.register(Product)
 admin.site.register(Order)
 
+#then after running again, we can see the models are added as table in http://localhost:8000/admin/
+# Then add each data
+
 
