@@ -21,8 +21,11 @@ from . import settings
 
 from django.conf.urls.static import static#import to get static file
 
+STATICFILES_DIRS=['static/'] 
+#is used to tell Django where to look for additional static files during development(CSS, JavaScript, images, fonts, etc.)
+
 urlpatterns = [
-    path('admin/', admin.site.urls),  # ✅ This is missing in your file
+    path('admin/', admin.site.urls),  # This is missing in your file
     path('', include('store.urls')),  # Your store app
 ]
 
