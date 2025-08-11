@@ -22,7 +22,6 @@ from . import settings
 from django.conf.urls.static import static#import to get static file
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),  # This is missing in your file
     path('', include('store.urls')),  # Your store app
