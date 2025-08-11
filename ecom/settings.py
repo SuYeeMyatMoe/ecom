@@ -104,6 +104,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS=['static/'] 
+#is used to tell Django where to look for additional static files during development(CSS, JavaScript, images, fonts, etc.)
 
 MEDIA_URL='media/'#uploaded will go to media directory folder
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')#find the URL with base directory and save the media directory on to it (file system path where media files are stored)
