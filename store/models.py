@@ -7,6 +7,9 @@ class Category(models.Model):
     name=models.CharField(max_length=50)
     def __str__(self):
         return self.name
+    
+    class Meta:
+         verbose_name_plural= "categories"#line is just a display label setting to change something under its class (made by daverobb2011)
 
 #Customer    
 class Customer(models.Model):
@@ -42,6 +45,7 @@ class Order(models.Model):
     def __str__(self):
         return self.product
     
+
     #make migration in terminal with this line (after cd and local )
     #  python manage.py makemigrations
 
