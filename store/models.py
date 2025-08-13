@@ -47,3 +47,10 @@ class Order(models.Model):
 
     #migration folder is created so will create a migration with terminal again
     #python manage.py migrate (OK is replied so it works)
+
+    #SuYeeMyatMoe
+# suyeemyatmoe21@gmail.com
+# 8000#2003
+#the login credential for admin
+
+# http://localhost:8000/admin (if we use this no need to login)
