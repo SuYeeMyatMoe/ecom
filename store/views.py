@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Product#import Product models from Database
 
 # Create your views here.
 def home(request):#wanna pass the request in here
