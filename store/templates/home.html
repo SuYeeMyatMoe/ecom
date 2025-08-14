@@ -88,7 +88,7 @@
           </div>
           <div class="col-md-6">
             <div class="small mb-1">SKU: BST-498</div>
-            <h1 class="display-5 fw-bolder">Shop item template</h1>
+            <h1 class="display-5 fw-bolder">##</h1>
             <div class="fs-5 mb-5">
               <span class="text-decoration-line-through">$45.00</span>
               <span>$40.00</span>
@@ -120,17 +120,22 @@
     <section class="py-5 bg-light">
       <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">Related products</h2>
+        
+
         <div
           class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
         >
+                   <!-- {{products}}checking if model data can be get in home page -->
+          {% for product in products %}
           <div class="col mb-5">
             <div class="card h-100">
               <!-- Product image-->
               <img
                 class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                src="{{product.image.url}}"
                 alt="..."
               />
+              <!-- image in here will affect all four row  -->
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
@@ -271,6 +276,7 @@
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
       </div>
     </section>
