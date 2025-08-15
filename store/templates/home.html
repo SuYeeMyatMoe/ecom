@@ -135,7 +135,6 @@
                 src="{{product.image.url}}"
                 alt="..."
               />
-              <!-- image in here will affect all four row  -->
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
@@ -155,6 +154,7 @@
               </div>
             </div>
           </div>
+          {% endfor %}
           <div class="col mb-5">
             <div class="card h-100">
               <!-- Sale badge-->
@@ -167,14 +167,14 @@
               <!-- Product image-->
               <img
                 class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                src="{{product.image.url}}"
                 alt="..."
               />
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
                   <!-- Product name-->
-                  <h5 class="fw-bolder">Special Item</h5>
+                  <h5 class="fw-bolder">{{product.name}}</h5>
                   <!-- Product reviews-->
                   <div
                     class="d-flex justify-content-center small text-warning mb-2"
@@ -187,7 +187,7 @@
                   </div>
                   <!-- Product price-->
                   <span class="text-muted text-decoration-line-through"
-                    >$20.00</span
+                    >{{product.price}}</span
                   >
                   $18.00
                 </div>
@@ -276,7 +276,7 @@
               </div>
             </div>
           </div>
-          {% endfor %}
+
         </div>
       </div>
     </section>
