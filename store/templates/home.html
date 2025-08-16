@@ -82,9 +82,11 @@
           <div class="col-md-6">
             <img
               class="card-img-top mb-5 mb-md-0"
-              src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+              src="http://127.0.0.1:8000/media/uploads/product/kv_global_PC_v2_IT3wkVi.webp"
               alt="..."
             />
+            <!-- used This is an absolute URL (full web address) as static file for image-->
+             <!-- ../ is relative path in the filesystem -->
           </div>
           <div class="col-md-6">
             <div class="small mb-1">SKU: BST-498</div>
@@ -140,6 +142,7 @@
                 <div class="text-center">
                   <!-- Product name-->
                   <h5 class="fw-bolder">{{product.name}}</h5>
+                  <h6>{{product.category}}</h6>
                   <!-- Product price-->
                   {{product.price}}
                 </div>
