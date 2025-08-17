@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodie Delight - Menu Management</title>
+    <title>Foodie Delight - Restaurant Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -94,13 +94,13 @@
             border-color: var(--primary);
         }
 
-        .menu-table {
+        .restaurant-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
         }
 
-        .menu-table th {
+        .restaurant-table th {
             background: var(--light);
             padding: 15px;
             text-align: left;
@@ -109,19 +109,19 @@
             border-bottom: 2px solid var(--light-gray);
         }
 
-        .menu-table td {
+        .restaurant-table td {
             padding: 15px;
             border-bottom: 1px solid var(--light-gray);
             vertical-align: middle;
         }
 
-        .menu-table tr:hover td {
+        .restaurant-table tr:hover td {
             background: rgba(255, 107, 53, 0.05);
         }
 
-        .menu-item-img {
-            width: 70px;
-            height: 70px;
+        .restaurant-image {
+            width: 80px;
+            height: 80px;
             border-radius: 8px;
             object-fit: cover;
             border: 2px solid var(--light);
@@ -139,12 +139,12 @@
             color: var(--secondary);
         }
 
-        .status-draft {
+        .status-pending {
             background: rgba(108, 117, 125, 0.15);
             color: var(--gray);
         }
 
-        .status-archived {
+        .status-closed {
             background: rgba(231, 76, 60, 0.15);
             color: #e74c3c;
         }
@@ -190,6 +190,7 @@
         .pagination .page-link {
             border-radius: 10px;
             margin: 0 5px;
+            color: var(--primary);
         }
 
         .pagination .page-item.active .page-link {
@@ -251,7 +252,7 @@
             margin: 0;
         }
 
-        .category-badge {
+        .cuisine-tag {
             display: inline-block;
             padding: 5px 15px;
             border-radius: 30px;
@@ -262,7 +263,7 @@
             margin-bottom: 5px;
         }
 
-        .popular-badge {
+        .featured-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -274,44 +275,11 @@
             font-weight: 500;
         }
 
-        .veg-indicator {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--secondary);
-            position: relative;
-        }
-
-        .veg-indicator:after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: white;
-            top: 4px;
-            left: 4px;
-        }
-
-        .nonveg-indicator {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #e74c3c;
-            position: relative;
-        }
-
-        .nonveg-indicator:after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: white;
-            top: 4px;
-            left: 4px;
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: #ffc107;
         }
 
         @media (max-width: 768px) {
@@ -321,7 +289,7 @@
                 align-items: flex-start;
             }
             
-            .menu-table {
+            .restaurant-table {
                 display: block;
                 overflow-x: auto;
             }
@@ -336,15 +304,15 @@
     <div class="admin-container">
         <div class="admin-header">
             <div>
-                <h3><i class="bi bi-menu-button-wide"></i> Menu Management</h3>
-                <p class="text-muted mb-0">Manage your restaurant's menu items</p>
+                <h3><i class="bi bi-shop"></i> Restaurant Management</h3>
+                <p class="text-muted mb-0">Manage your restaurant partners</p>
             </div>
             <div>
                 <a href="./admin.html" class="btn btn-outline-secondary me-2">
-                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    <i class="bi bi-arrow-left"></i> Back To Dashboard
                 </a>
                 <button class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Add Menu Item
+                    <i class="bi bi-plus-circle"></i> Add Restaurant
                 </button>
             </div>
         </div>
@@ -353,28 +321,28 @@
             <div class="col-md-4">
                 <div class="stats-card">
                     <div class="stats-icon primary">
-                        <i class="bi bi-menu-button-wide"></i>
+                        <i class="bi bi-shop"></i>
                     </div>
-                    <div class="stats-value">142</div>
-                    <div class="stats-title">Total Menu Items</div>
+                    <div class="stats-value">48</div>
+                    <div class="stats-title">Total Restaurants</div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stats-card">
                     <div class="stats-icon secondary">
-                        <i class="bi bi-star"></i>
+                        <i class="bi bi-check-circle"></i>
                     </div>
-                    <div class="stats-value">28</div>
-                    <div class="stats-title">Featured Items</div>
+                    <div class="stats-value">42</div>
+                    <div class="stats-title">Active Restaurants</div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stats-card">
                     <div class="stats-icon purple">
-                        <i class="bi bi-currency-dollar"></i>
+                        <i class="bi bi-star"></i>
                     </div>
-                    <div class="stats-value">$12.99</div>
-                    <div class="stats-title">Average Price</div>
+                    <div class="stats-value">18</div>
+                    <div class="stats-title">Featured Restaurants</div>
                 </div>
             </div>
         </div>
@@ -385,38 +353,37 @@
                     <button class="btn" type="button">
                         <i class="bi bi-search"></i>
                     </button>
-                    <input type="text" class="form-control" placeholder="Search menu items by name or description">
+                    <input type="text" class="form-control" placeholder="Search restaurants by name, cuisine, or location">
                     <button class="btn btn-primary" type="button">Search</button>
                 </div>
                 
                 <div class="filter-bar">
-                    <button class="filter-btn active">All Items</button>
-                    <button class="filter-btn">Burgers</button>
-                    <button class="filter-btn">Pizza</button>
-                    <button class="filter-btn">Salads</button>
-                    <button class="filter-btn">Drinks</button>
-                    <button class="filter-btn">Desserts</button>
+                    <button class="filter-btn active">All Restaurants</button>
+                    <button class="filter-btn">Featured</button>
+                    <button class="filter-btn">New</button>
+                    <button class="filter-btn">Top Rated</button>
+                    <button class="filter-btn">Fast Food</button>
+                    <button class="filter-btn">Fine Dining</button>
                     
                     <div class="ms-auto">
                         <select class="form-select">
-                            <option>All Restaurants</option>
-                            <option selected>Burger Palace</option>
-                            <option>Sushi Master</option>
-                            <option>Pizza Heaven</option>
-                            <option>Green Bowl</option>
+                            <option>Sort by: Newest</option>
+                            <option>Sort by: Highest Rated</option>
+                            <option>Sort by: Most Popular</option>
+                            <option selected>Sort by: A-Z</option>
                         </select>
                     </div>
                 </div>
             </div>
             
             <div class="table-responsive">
-                <table class="menu-table">
+                <table class="restaurant-table">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Price</th>
+                            <th>Restaurant</th>
+                            <th>Cuisine</th>
+                            <th>Location</th>
+                            <th>Rating</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -425,23 +392,33 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="Classic Cheeseburger">
+                                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Burger Palace">
                                     <div>
-                                        <div class="fw-bold">Classic Cheeseburger <span class="popular-badge"><i class="bi bi-star-fill"></i> Popular</span></div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="nonveg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1001</span>
-                                        </div>
+                                        <div class="fw-bold">Burger Palace <span class="featured-badge"><i class="bi bi-star-fill"></i> Featured</span></div>
+                                        <div class="text-muted small">ID: #RES-1001</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Beef patty with cheese, lettuce, tomato, and special sauce</td>
                             <td>
-                                <span class="category-badge">Burgers</span>
-                                <span class="category-badge">Main Course</span>
+                                <span class="cuisine-tag">Burgers</span>
+                                <span class="cuisine-tag">American</span>
+                                <span class="cuisine-tag">Fast Food</span>
                             </td>
-                            <td class="fw-bold">$12.99</td>
+                            <td>
+                                <div>123 Burger Street</div>
+                                <div class="text-muted small">New York, NY 10001</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">4.5</span>
+                                </div>
+                            </td>
                             <td><span class="status-badge status-active">Active</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
@@ -450,8 +427,94 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Sushi Master">
+                                    <div>
+                                        <div class="fw-bold">Sushi Master</div>
+                                        <div class="text-muted small">ID: #RES-1002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="cuisine-tag">Japanese</span>
+                                <span class="cuisine-tag">Sushi</span>
+                                <span class="cuisine-tag">Asian</span>
+                            </td>
+                            <td>
+                                <div>456 Sushi Avenue</div>
+                                <div class="text-muted small">Los Angeles, CA 90001</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted ms-2">4.2</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="action-btn" title="View">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Pizza Heaven">
+                                    <div>
+                                        <div class="fw-bold">Pizza Heaven <span class="featured-badge"><i class="bi bi-star-fill"></i> Featured</span></div>
+                                        <div class="text-muted small">ID: #RES-1003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="cuisine-tag">Italian</span>
+                                <span class="cuisine-tag">Pizza</span>
+                                <span class="cuisine-tag">Fast Food</span>
+                            </td>
+                            <td>
+                                <div>789 Pizza Road</div>
+                                <div class="text-muted small">Chicago, IL 60007</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">4.8</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="action-btn" title="View">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
                                 </button>
                             </td>
                         </tr>
@@ -459,22 +522,32 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="Superfood Salad">
+                                         class="restaurant-image me-3" alt="Green Bowl">
                                     <div>
-                                        <div class="fw-bold">Superfood Salad</div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="veg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1002</span>
-                                        </div>
+                                        <div class="fw-bold">Green Bowl</div>
+                                        <div class="text-muted small">ID: #RES-1004</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Kale, quinoa, avocado, berries, and honey dressing</td>
                             <td>
-                                <span class="category-badge">Salads</span>
-                                <span class="category-badge">Healthy</span>
+                                <span class="cuisine-tag">Healthy</span>
+                                <span class="cuisine-tag">Vegetarian</span>
+                                <span class="cuisine-tag">Salads</span>
                             </td>
-                            <td class="fw-bold">$10.99</td>
+                            <td>
+                                <div>101 Health Lane</div>
+                                <div class="text-muted small">San Francisco, CA 94101</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">4.6</span>
+                                </div>
+                            </td>
                             <td><span class="status-badge status-active">Active</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
@@ -483,31 +556,41 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLtw2gr-jMlyTxux7FUIePt1Mb2d9fItCWbA&s" 
-                                         class="menu-item-img me-3" alt="Crispy Chicken Sandwich">
+                                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Taco Fiesta">
                                     <div>
-                                        <div class="fw-bold">Crispy Chicken Sandwich <span class="popular-badge"><i class="bi bi-star-fill"></i> Popular</span></div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="nonveg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1003</span>
-                                        </div>
+                                        <div class="fw-bold">Taco Fiesta</div>
+                                        <div class="text-muted small">ID: #RES-1005</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Buttermilk fried chicken with pickles and spicy mayo</td>
                             <td>
-                                <span class="category-badge">Sandwiches</span>
-                                <span class="category-badge">Main Course</span>
+                                <span class="cuisine-tag">Mexican</span>
+                                <span class="cuisine-tag">Tacos</span>
+                                <span class="cuisine-tag">Fast Food</span>
                             </td>
-                            <td class="fw-bold">$11.49</td>
+                            <td>
+                                <div>222 Spice Street</div>
+                                <div class="text-muted small">Austin, TX 73301</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted ms-2">4.3</span>
+                                </div>
+                            </td>
                             <td><span class="status-badge status-active">Active</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
@@ -516,31 +599,41 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="Chocolate Brownie">
+                                    <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Sweet Delights">
                                     <div>
-                                        <div class="fw-bold">Chocolate Brownie</div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="veg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1004</span>
-                                        </div>
+                                        <div class="fw-bold">Sweet Delights <span class="featured-badge"><i class="bi bi-star-fill"></i> Featured</span></div>
+                                        <div class="text-muted small">ID: #RES-1006</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Rich chocolate brownie with walnuts and vanilla ice cream</td>
                             <td>
-                                <span class="category-badge">Desserts</span>
-                                <span class="category-badge">Sweet</span>
+                                <span class="cuisine-tag">Desserts</span>
+                                <span class="cuisine-tag">Cakes</span>
+                                <span class="cuisine-tag">Pastries</span>
                             </td>
-                            <td class="fw-bold">$6.99</td>
+                            <td>
+                                <div>333 Sugar Avenue</div>
+                                <div class="text-muted small">Boston, MA 02101</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">4.9</span>
+                                </div>
+                            </td>
                             <td><span class="status-badge status-active">Active</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
@@ -549,32 +642,42 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Menu">
+                                    <i class="bi bi-menu-button"></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="Grilled Chicken Sandwich">
+                                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="Mediterranean Grill">
                                     <div>
-                                        <div class="fw-bold">Grilled Chicken Sandwich</div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="nonveg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1005</span>
-                                        </div>
+                                        <div class="fw-bold">Mediterranean Grill</div>
+                                        <div class="text-muted small">ID: #RES-1007</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Marinated chicken breast with garlic aioli on ciabatta</td>
                             <td>
-                                <span class="category-badge">Sandwiches</span>
-                                <span class="category-badge">Main Course</span>
+                                <span class="cuisine-tag">Mediterranean</span>
+                                <span class="cuisine-tag">Healthy</span>
+                                <span class="cuisine-tag">Grill</span>
                             </td>
-                            <td class="fw-bold">$11.99</td>
-                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div>444 Olive Street</div>
+                                <div class="text-muted small">Miami, FL 33101</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">4.7</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
                                     <i class="bi bi-pencil"></i>
@@ -582,32 +685,42 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Approve">
+                                    <i class="bi bi-check-circle"></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="Margherita Pizza">
+                                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                         class="restaurant-image me-3" alt="BBQ Pit">
                                     <div>
-                                        <div class="fw-bold">Margherita Pizza</div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="veg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1006</span>
-                                        </div>
+                                        <div class="fw-bold">BBQ Pit</div>
+                                        <div class="text-muted small">ID: #RES-1008</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Classic pizza with tomato sauce, mozzarella, and basil</td>
                             <td>
-                                <span class="category-badge">Pizza</span>
-                                <span class="category-badge">Main Course</span>
+                                <span class="cuisine-tag">BBQ</span>
+                                <span class="cuisine-tag">American</span>
+                                <span class="cuisine-tag">Grill</span>
                             </td>
-                            <td class="fw-bold">$14.99</td>
-                            <td><span class="status-badge status-draft">Draft</span></td>
+                            <td>
+                                <div>555 Smoke Road</div>
+                                <div class="text-muted small">Dallas, TX 75201</div>
+                            </td>
+                            <td>
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="text-muted ms-2">3.5</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-closed">Temporarily Closed</span></td>
                             <td>
                                 <button class="action-btn" title="Edit">
                                     <i class="bi bi-pencil"></i>
@@ -615,74 +728,8 @@
                                 <button class="action-btn" title="View">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://staticcookist.akamaized.net/wp-content/uploads/sites/22/2024/06/cheese-onion-rings.jpg" 
-                                         class="menu-item-img me-3" alt="Onion Rings">
-                                    <div>
-                                        <div class="fw-bold">Onion Rings</div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="veg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1007</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Beer-battered onion rings served with ranch dressing</td>
-                            <td>
-                                <span class="category-badge">Sides</span>
-                                <span class="category-badge">Appetizer</span>
-                            </td>
-                            <td class="fw-bold">$4.99</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>
-                                <button class="action-btn" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="action-btn" title="View">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                         class="menu-item-img me-3" alt="BBQ Bacon Burger">
-                                    <div>
-                                        <div class="fw-bold">BBQ Bacon Burger <span class="popular-badge"><i class="bi bi-star-fill"></i> Popular</span></div>
-                                        <div class="d-flex align-items-center mt-1">
-                                            <span class="nonveg-indicator me-2"></span>
-                                            <span class="text-muted small">ID: #MI-1008</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Double beef patty with bacon, cheddar, and BBQ sauce</td>
-                            <td>
-                                <span class="category-badge">Burgers</span>
-                                <span class="category-badge">Main Course</span>
-                            </td>
-                            <td class="fw-bold">$14.99</td>
-                            <td><span class="status-badge status-archived">Archived</span></td>
-                            <td>
-                                <button class="action-btn" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="action-btn" title="View">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                                <button class="action-btn" title="Duplicate">
-                                    <i class="bi bi-files"></i>
+                                <button class="action-btn" title="Reopen">
+                                    <i class="bi bi-arrow-repeat"></i>
                                 </button>
                             </td>
                         </tr>
@@ -691,7 +738,7 @@
             </div>
             
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="text-muted">Showing 8 of 142 menu items</div>
+                <div class="text-muted">Showing 8 of 48 restaurants</div>
                 <nav>
                     <ul class="pagination">
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
@@ -723,19 +770,27 @@
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const action = this.querySelector('i').className;
-                const menuItem = this.closest('tr').querySelector('.fw-bold').textContent;
+                const restaurant = this.closest('tr').querySelector('.fw-bold').textContent;
                 
                 if (action.includes('bi-pencil')) {
-                    console.log(`Edit menu item: ${menuItem}`);
-                    alert(`Edit menu item: ${menuItem}`);
+                    console.log(`Edit restaurant: ${restaurant}`);
+                    alert(`Edit restaurant: ${restaurant}`);
                 } 
                 else if (action.includes('bi-eye')) {
-                    console.log(`View menu item: ${menuItem}`);
-                    alert(`View menu item: ${menuItem}`);
+                    console.log(`View restaurant: ${restaurant}`);
+                    alert(`View restaurant: ${restaurant}`);
                 }
-                else if (action.includes('bi-files')) {
-                    console.log(`Duplicate menu item: ${menuItem}`);
-                    alert(`Duplicate menu item: ${menuItem}`);
+                else if (action.includes('bi-menu-button')) {
+                    console.log(`Manage menu: ${restaurant}`);
+                    alert(`Manage menu: ${restaurant}`);
+                }
+                else if (action.includes('bi-check-circle')) {
+                    console.log(`Approve restaurant: ${restaurant}`);
+                    alert(`Approve restaurant: ${restaurant}`);
+                }
+                else if (action.includes('bi-arrow-repeat')) {
+                    console.log(`Reopen restaurant: ${restaurant}`);
+                    alert(`Reopen restaurant: ${restaurant}`);
                 }
             });
         });
