@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Delight - Edit Menu Item</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #4a9e5c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --accent: #ffd166;
+            --gray: #6c757d;
+            --light-gray: #f1f3f5;
+            --sidebar: #2c3e50;
+            --sidebar-hover: #34495e;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            color: #333;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Playfair Display", serif;
+            font-weight: 700;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .form-section h4 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            transition: var(--transition);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+        }
+
+        .image-upload-container {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light);
+        }
+
+        .image-upload-container:hover {
+            border-color: var(--primary);
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-secondary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 500;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .option-group {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .option-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .option-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .add-option-btn {
+            color: var(--primary);
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .add-option-btn:hover {
+            color: #e55a2b;
+        }
+
+        .remove-option {
+            color: #e74c3c;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .remove-option:hover {
+            color: #c0392b;
+        }
+
+        .ingredient-tag {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(74, 158, 92, 0.15);
+            color: var(--secondary);
+            padding: 5px 15px;
+            border-radius: 30px;
+            margin: 0 5px 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .ingredient-tag .remove {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tag-input-container {
+            position: relative;
+        }
+
+        .tag-input-container .dropdown-menu {
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .option-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h3><i class="bi bi-menu-button-wide"></i> Edit Menu Item</h3>
+                <p class="text-muted mb-0">Update your menu item details</p>
+            </div>
+            <div>
+                <a href="#" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-arrow-left"></i> Back to Menu
+                </a>
+                <button class="btn btn-primary">
+                    <i class="bi bi-save"></i> Save Changes
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="admin-card">
+                    <div class="form-section">
+                        <h4><i class="bi bi-card-text"></i> Basic Information</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Item Name</label>
+                            <input type="text" class="form-control" placeholder="Enter item name" value="Classic Cheeseburger">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter item description">Our signature beef patty with American cheese, lettuce, tomato, onion, and special sauce on a brioche bun.</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Price ($)</label>
+                                <input type="number" class="form-control" placeholder="0.00" step="0.01" value="12.99">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Category</label>
+                                <select class="form-select">
+                                    <option>Burgers</option>
+                                    <option selected>Main Course</option>
+                                    <option>Appetizers</option>
+                                    <option>Desserts</option>
+                                    <option>Drinks</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Preparation Time (minutes)</label>
+                                <input type="number" class="form-control" placeholder="Enter preparation time" value="15">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Calories</label>
+                                <input type="number" class="form-control" placeholder="Enter calories" value="780">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="bi bi-card-checklist"></i> Customization Options</h4>
+                        <div class="option-group">
+                            <div class="option-row">
+                                <div class="flex-grow-1">
+                                    <label class="form-label">Option Name</label>
+                                    <input type="text" class="form-control" placeholder="e.g., Cheese Type" value="Extra Toppings">
+                                </div>
+                                <div style="min-width: 120px;">
+                                    <label class="form-label">Required?</label>
+                                    <div class="form-check form-switch mt-2">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="requiredSwitch" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Options (comma separated)</label>
+                                <input type="text" class="form-control" placeholder="e.g., Lettuce, Tomato, Onion" value="Bacon, Avocado, Extra Cheese">
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <div class="option-row">
+                                <div class="flex-grow-1">
+                                    <label class="form-label">Option Name</label>
+                                    <input type="text" class="form-control" placeholder="e.g., Sauce Selection" value="Sauce Selection">
+                                </div>
+                                <div style="min-width: 120px;">
+                                    <label class="form-label">Required?</label>
+                                    <div class="form-check form-switch mt-2">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="requiredSwitch2">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Options (comma separated)</label>
+                                <input type="text" class="form-control" placeholder="e.g., Ketchup, Mustard, Mayo" value="BBQ Sauce, Garlic Aioli, Spicy Mayo">
+                            </div>
+                        </div>
+                        
+                        <button class="add-option-btn">
+                            <i class="bi bi-plus-circle"></i> Add Customization Option
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="bi bi-list-check"></i> Ingredients & Allergens</h4>
+                        <div class="mb-4">
+                            <label class="form-label">Ingredients</label>
+                            <div class="mb-3">
+                                <div id="ingredient-tags">
+                                    <span class="ingredient-tag">Beef Patty <span class="remove">×</span></span>
+                                    <span class="ingredient-tag">Cheddar Cheese <span class="remove">×</span></span>
+                                    <span class="ingredient-tag">Brioche Bun <span class="remove">×</span></span>
+                                    <span class="ingredient-tag">Lettuce <span class="remove">×</span></span>
+                                </div>
+                            </div>
+                            <div class="tag-input-container">
+                                <input type="text" class="form-control" id="ingredient-input" placeholder="Add ingredient (press Enter to add)">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Allergens</label>
+                            <div class="d-flex flex-wrap gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="dairy" checked>
+                                    <label class="form-check-label" for="dairy">Dairy</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gluten">
+                                    <label class="form-check-label" for="gluten">Gluten</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="nuts">
+                                    <label class="form-check-label" for="nuts">Nuts</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="eggs">
+                                    <label class="form-check-label" for="eggs">Eggs</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="soy">
+                                    <label class="form-check-label" for="soy">Soy</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="admin-card">
+                    <div class="form-section">
+                        <h4><i class="bi bi-image"></i> Item Image</h4>
+                        <div class="image-upload-container" id="image-upload-area">
+                            <i class="bi bi-cloud-arrow-up" style="font-size: 3rem; color: var(--gray);"></i>
+                            <h5>Upload Item Image</h5>
+                            <p class="text-muted">Click to browse or drag & drop</p>
+                            <p class="text-muted small">Recommended size: 800x600 pixels</p>
+                            <input type="file" id="image-upload" accept="image/*" hidden>
+                            <img id="image-preview" class="image-preview" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Preview">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="bi bi-tags"></i> Tags & Status</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Tags (comma separated)</label>
+                            <input type="text" class="form-control" placeholder="e.g., popular, spicy, vegetarian" value="signature, popular, beef">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Availability</label>
+                                <div class="d-flex align-items-center">
+                                    <label class="switch me-3">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span class="text-success">Available</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Popular Item</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="popularSwitch" checked>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Special Offer</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="specialOfferSwitch">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="bi bi-shop"></i> Restaurant</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Select Restaurant</label>
+                            <select class="form-select">
+                                <option>All Restaurants</option>
+                                <option selected>Burger Palace</option>
+                                <option>Sushi Master</option>
+                                <option>Pizza Heaven</option>
+                                <option>Green Bowl</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-primary">
+                            <i class="bi bi-save"></i> Save Changes
+                        </button>
+                        <button class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i> Delete Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Image upload preview
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const imageUploadArea = document.getElementById('image-upload-area');
+        
+        imageUploadArea.addEventListener('click', () => {
+            imageUpload.click();
+        });
+        
+        imageUpload.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        
+        // Drag and drop for image upload
+        imageUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            imageUploadArea.style.borderColor = var(--primary);
+            imageUploadArea.style.backgroundColor = 'rgba(255, 107, 53, 0.1)';
+        });
+        
+        imageUploadArea.addEventListener('dragleave', () => {
+            imageUploadArea.style.borderColor = '#ddd';
+            imageUploadArea.style.backgroundColor = '';
+        });
+        
+        imageUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imageUploadArea.style.borderColor = '#ddd';
+            imageUploadArea.style.backgroundColor = '';
+            
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                imageUpload.files = e.dataTransfer.files;
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(e.dataTransfer.files[0]);
+            }
+        });
+        
+        // Ingredient tags functionality
+        const ingredientInput = document.getElementById('ingredient-input');
+        const ingredientTags = document.getElementById('ingredient-tags');
+        
+        ingredientInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                e.preventDefault();
+                
+                const tag = document.createElement('span');
+                tag.className = 'ingredient-tag';
+                tag.innerHTML = `${this.value.trim()} <span class="remove">×</span>`;
+                
+                tag.querySelector('.remove').addEventListener('click', function() {
+                    tag.remove();
+                });
+                
+                ingredientTags.appendChild(tag);
+                this.value = '';
+            }
+        });
+        
+        // Initialize remove functionality for existing tags
+        document.querySelectorAll('.ingredient-tag .remove').forEach(removeBtn => {
+            removeBtn.addEventListener('click', function() {
+                this.closest('.ingredient-tag').remove();
+            });
+        });
+        
+        // Show image preview initially since we have an image
+        window.onload = function() {
+            imagePreview.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
