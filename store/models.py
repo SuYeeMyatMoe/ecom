@@ -37,6 +37,7 @@ class Product(models.Model):
 
 #python manage.py makemigrations
 #python manage.py migrate
+#if run the server and in admin panel, we can see the two input and we can make the sale price is different from real price
     
 
     def __str__(self):
