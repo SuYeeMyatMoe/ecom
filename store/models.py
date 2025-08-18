@@ -30,7 +30,12 @@ class Product(models.Model):
     image=models.ImageField(upload_to='uploads/product/')
     #need to download pillow (python image library) to upload images
 
-    #Add Sale Stuff
+    #Add Sale Stuff(hey, is this thing on sale yes or no)
+    is_sale=models.BooleanField(default=False)
+    sale_price=models.DecimalField(default=0,decimal_places=2,max_digits=6)#same as upper price
+    #this is major change so must push migration in dbs
+
+
     
 
     def __str__(self):
