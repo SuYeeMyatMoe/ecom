@@ -35,7 +35,8 @@ class Product(models.Model):
     sale_price=models.DecimalField(default=0,decimal_places=2,max_digits=6)#same as upper price
     #this is major change so must push migration in dbs
 
-
+#python manage.py makemigrations
+#python manage.py migrate
     
 
     def __str__(self):
