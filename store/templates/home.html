@@ -129,6 +129,11 @@
         >
                    <!-- {{products}}checking if model data can be get in home page -->
           {% for product in products %}
+
+          <!-- to add if sale and sale price -->
+           {% if product.is_sale %}<!-- if is_sale is true -->
+           Sale Discount!!!
+           {% else %}
           <div class="col mb-5">
             <div class="card h-100">
               <!-- Product image-->
@@ -157,6 +162,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
           
           </div>
