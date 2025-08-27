@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Product#import Product models from Database
-
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 def home(request):#wanna pass the request in here
 #after importing, we will gonna use models in home page
@@ -20,8 +20,8 @@ def home(request):#wanna pass the request in here
 def about(request):    
     return render(request,'about.html',{})
 
-def login(request):    
+def login_user(request):    
     return render(request,'login.html',{})
 
-def logout(request):    
+def logout_user(request):    
     return render(request,'logout.html',{})
