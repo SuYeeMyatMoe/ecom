@@ -1,7 +1,333 @@
+<style>
+    /* Custom styles for the about page */
+    .about-hero {
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 8rem 0;
+        margin-bottom: 4rem;
+        margin-top: 1rem;
+    }
+    
+    .section-title {
+        position: relative;
+        margin-bottom: 3rem;
+        padding-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: #ff6b35;
+        border-radius: 2px;
+    }
+    
+    .section-title.center::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .story-img {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .value-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        border: none;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .value-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .value-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #fff6f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: #ff6b35;
+        font-size: 2rem;
+    }
+    
+    .team-member {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .team-img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1.5rem;
+        border: 5px solid #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .stats-section {
+        background: linear-gradient(to right, #ff6b35, #ff8c5a);
+        color: white;
+        padding: 5rem 0;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .testimonial-card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .testimonial-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 1rem;
+        border: 3px solid #ff6b35;
+    }
+    
+    .rating {
+        color: #f39c12;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-section {
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 6rem 0;
+        border-radius: 15px;
+    }
+</style>
 {% extends 'base.html' %}
 {% block content %}
 
-About Me stuff 
-<!-- html, url and view -->
+<!-- Hero Section -->
+<div style="padding-top: 76px;">
+    <section class="about-hero text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-3 fw-bolder mb-4">Our Story</h1>
+                    <p class="lead mb-4">From a small kitchen to serving thousands of happy customers daily</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- About Us Content -->
+<main class="container">
+    <!-- Our Story Section -->
+    <section class="py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="section-title">How It All Began</h2>
+                <p class="lead">Founded in 2015, FoodExpress started as a small family restaurant with a big dream: to deliver delicious, home-cooked meals to busy people.</p>
+                <p>Our founder, Maria Rodriguez, noticed how hard it was for working professionals and families to find time to cook nutritious meals. What began as a simple delivery service from her own kitchen has now grown into a platform connecting hundreds of local restaurants with food lovers across the city.</p>
+                <p>Today, we're proud to serve over 50,000 customers monthly while maintaining the same commitment to quality, taste, and service that Maria started with.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Our restaurant kitchen" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="py-5">
+        <h2 class="section-title text-center center mb-5">Our Values</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="value-card card p-4 text-center">
+                    <div class="value-icon">
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <h3>Quality First</h3>
+                    <p>We never compromise on ingredient quality and crafted them with care and attention to detail.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card card p-4 text-center">
+                    <div class="value-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>We guarantee your food will arrive hot and fresh within 30 minutes or your next meal is on us.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card card p-4 text-center">
+                    <div class="value-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+                    <h3>Community Focus</h3>
+                    <p>We support local restaurants and suppliers, helping to strengthen our local food economy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section rounded-3 mb-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                    <div class="stat-number">50,000+</div>
+                    <p>Happy Customers</p>
+                </div>
+                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                    <div class="stat-number">200+</div>
+                    <p>Restaurant Partners</p>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-number">500,000+</div>
+                    <p>Meals Delivered</p>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-number">98%</div>
+                    <p>Positive Reviews</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5">
+        <h2 class="section-title text-center center mb-5">Meet Our Team</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="CEO" class="team-img">
+                    <h3>Maria Rodriguez</h3>
+                    <p class="text-muted">Founder & CEO</p>
+                    <p>With 15 years in the culinary industry, Maria's vision drives our company forward.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Head Chef" class="team-img">
+                    <h3>James Wilson</h3>
+                    <p class="text-muted">Head Chef</p>
+                    <p>James brings innovation to our menu with his Michelin-star restaurant experience.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Operations Manager" class="team-img">
+                    <h3>Sarah Chen</h3>
+                    <p class="text-muted">Operations Manager</p>
+                    <p>Sarah ensures our delivery system runs smoothly and efficiently every day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-5">
+        <h2 class="section-title text-center center mb-5">What Our Customers Say</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card card p-4">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Customer" class="testimonial-img">
+                        <div class="rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="fst-italic">"The food always arrives hot and delicious. FoodExpress has become our family's go-to for busy weeknights!"</p>
+                        <h5 class="mt-3">Michael Thompson</h5>
+                        <p class="text-muted">Regular Customer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card card p-4">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Customer" class="testimonial-img">
+                        <div class="rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                        </div>
+                        <p class="fst-italic">"As a busy professional, I rely on FoodExpress for quality meals. Their service is consistently excellent and reliable."</p>
+                        <h5 class="mt-3">Jessica Kim</h5>
+                        <p class="text-muted">Food Blogger</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card card p-4">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Customer" class="testimonial-img">
+                        <div class="rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="fst-italic">"I love that I can support local restaurants through FoodExpress. The variety is amazing and everything tastes fresh!"</p>
+                        <h5 class="mt-3">David Miller</h5>
+                        <p class="text-muted">Local Foodie</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-5">
+        <div class="cta-section text-center rounded-3">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="display-5 fw-bold mb-4">Ready to experience the best food delivery?</h2>
+                        <p class="lead mb-4">Join thousands of satisfied customers who enjoy delicious meals delivered to their door.</p>
+                        <a href="#" class="btn btn-primary btn-lg px-5 py-3">
+                            <i class="bi bi-lightning-charge me-2"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 
 {% endblock %}
