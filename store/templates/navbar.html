@@ -30,6 +30,13 @@
             <li><a class="dropdown-item" href="#!">Beverages</a></li>
           </ul>
         </li>
+        {% if user.is_authenticated %}
+        <!-- if user is login, show this(if we login in django admin, it will show as logout) -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <!-- if user is login, show this(if we logout in django admin, it will show as logout) -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        {% endif %}
       </ul>
       <form class="d-flex">
         <button class="btn btn-outline-dark" type="submit">

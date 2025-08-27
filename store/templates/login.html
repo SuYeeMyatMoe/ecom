@@ -184,17 +184,22 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="login-right">
-                            <a href="#" class="brand-logo">FoodExpress</a>
+                            <a class="brand-logo">FoodExpress</a>
                             <h2 class="mb-4">Sign in to your account</h2>
                             
-                            <form>
+                            <form method="POST" action="{% url 'login' %}">
+                                <!-- action is login because name of urls.py is login -->
+
+                                {% csrf_token %}
+                                <!-- making other can't inject the data from code by inspecting -->
+
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                    <input type="email" class="form-control" id="email" name="user_email" placeholder="name@example.com">
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                                    <input type="password" class="form-control" id="password" name="userpassword" placeholder="Enter your password">
                                     <div class="d-flex justify-content-end mt-2">
                                         <a href="#" class="text-decoration-none" style="color: var(--primary); font-size: 0.9rem;">Forgot password?</a>
                                     </div>
