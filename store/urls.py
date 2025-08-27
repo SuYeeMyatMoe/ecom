@@ -7,4 +7,6 @@ urlpatterns = [
 
     path('',views.home,name='home'),#Url for home page (view.home is file name) 
     # (anytime you create webpage you need URL like this and must create view and template with html file)
+
+    path('about/',views.about,name='about')
 ]
