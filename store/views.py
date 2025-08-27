@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from .models import Product#import Product models from Database
 from django.contrib.auth import authenticate, login, logout
@@ -29,7 +28,7 @@ def login_user(request):
         password=request.POST['userpassword']
         user = authenticate(request, username=username, password=password)
         if user is not None:#if login success, we let them login
-            login(request,user)
+            login(request,user)#login builtin function 
             messages.success(request, "You have successfully login!")
             return redirect('home')
         else:
