@@ -19,3 +19,9 @@ def home(request):#wanna pass the request in here
 
 def about(request):    
     return render(request,'about.html',{})
+
+def login(request):    
+    return render(request,'login.html',{})
+
+def logout(request):    
+    return render(request,'logout.html',{})

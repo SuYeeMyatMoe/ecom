@@ -1,0 +1,220 @@
+<style>
+
+.login-container {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 4rem;
+}
+
+.login-left {
+    background: linear-gradient(rgba(255, 107, 53, 0.9), rgba(255, 140, 90, 0.9)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    min-height: 100%;
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-right {
+    padding: 2rem;
+}
+
+.brand-logo {
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+.welcome-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 1.5rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+}
+
+.btn-login {
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 10px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background: #e55a2b;
+    transform: translateY(-2px);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.divider-text {
+    padding: 0 1rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.social-login {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-social {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.btn-social:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 992px) {
+    .login-left {
+        display: none;
+    }
+}
+</style>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="login-container">
+                <div class="row g-0">
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="login-left">
+                            <h2 class="welcome-text">Welcome back to FoodExpress</h2>
+                            <p>Sign in to continue your culinary journey and get your favorite meals delivered.</p>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+                                <div>
+                                    <h5>Fast Delivery</h5>
+                                    <p>Get food in 30 minutes or less</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div>
+                                    <h5>Secure Payments</h5>
+                                    <p>Your data is always protected</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="bi bi-star"></i>
+                                </div>
+                                <div>
+                                    <h5>Exclusive Deals</h5>
+                                    <p>Special offers for members only</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="login-right">
+                            <a href="#" class="brand-logo">FoodExpress</a>
+                            <h2 class="mb-4">Sign in to your account</h2>
+                            
+                            <form>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                                    <div class="d-flex justify-content-end mt-2">
+                                        <a href="#" class="text-decoration-none" style="color: var(--primary); font-size: 0.9rem;">Forgot password?</a>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <button type="submit" class="btn btn-login">Sign in</button>
+
+                                <div class="login-footer">
+                                    <p>Don't have an account? <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 500;">Sign up now</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
