@@ -17,5 +17,5 @@ def home(request):#wanna pass the request in here
     #cus
     #order
 
-def home(request):    
+def about(request):    
     return render(request,'about.html',{})
