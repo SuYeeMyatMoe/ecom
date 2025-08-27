@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product#import Product models from Database
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages#to inform user with messages for errors
@@ -24,9 +25,9 @@ def about(request):
 
 def login_user(request):   
     if request.method=="POST":
-        username=request.POST['username']#used name in input and we use that name in here 
-        password=request.POST['passport']
-        user = authenticate(request,username=username,password=password)
+        username=request.POST['user_name']#used name in input and we use that name in here 
+        password=request.POST['userpassword']
+        user = authenticate(request, username=username, password=password)
         if user is not None:#if login success, we let them login
             login(request,user)
             messages.success(request, "You have successfully login!")
