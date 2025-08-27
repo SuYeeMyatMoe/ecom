@@ -9,5 +9,5 @@ urlpatterns = [
     # (anytime you create webpage you need URL like this and must create view and template with html file)
     path('about/',views.about,name='about'),
     path('login/',views.login_user,name='login'),
-    path('logout/',views.logout_user,name='login')
+    path('logout/',views.logout_user,name='logout')
 ]

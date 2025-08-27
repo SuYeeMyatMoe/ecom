@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Product#import Product models from Database
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages#to inform user with messages for errors
+
 # Create your views here.
 def home(request):#wanna pass the request in here
 #after importing, we will gonna use models in home page
@@ -20,8 +22,22 @@ def home(request):#wanna pass the request in here
 def about(request):    
     return render(request,'about.html',{})
 
-def login_user(request):    
-    return render(request,'login.html',{})
+def login_user(request):   
+    if request.method=="POST":
+        username=request.POST['username']#used name in input and we use that name in here 
+        password=request.POST['passport']
+        user = authenticate(request,username=username,password=password)
+        if user is not None:#if login success, we let them login
+            login(request,user)
+            messages.success(request, "You have successfully login!")
+            return redirect('home')
+        else:
+            messages.success(request, "The login process is rejected, Please try again!")
+            return redirect('login')
+    else:
+        return render(request,'login.html',{})
 
 def logout_user(request):    
-    return render(request,'logout.html',{})
+    logout(request)
+    messages.success(request,("You have successfully logout!"))
+    return redirect('home')
