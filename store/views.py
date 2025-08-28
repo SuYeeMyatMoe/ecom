@@ -11,7 +11,9 @@ from django import forms
 def home(request):#wanna pass the request in here
 #after importing, we will gonna use models in home page
 
-    products= Product.objects.all()#get data from product models in dbs and output as variable
+    # products= Product.objects.all()#get data from product models in dbs and output as variable
+    #wil only get all for food product page
+    products = Product.objects.order_by('-id')[:4]  # latest 4
     return render(request,'home.html',{'products':products})#added model in context dictionary{} 
     #home.html need to direct the template directiory in store app so create new folder (I named folder as templates to store all html templates)
     # the running will stop if terminal is close
