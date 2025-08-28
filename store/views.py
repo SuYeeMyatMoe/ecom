@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Product#import Product models from Database
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages#to inform user with messages for errors
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .forms import SignUpForm
+from django import forms
 
 # Create your views here.
 def home(request):#wanna pass the request in here
@@ -39,9 +43,30 @@ def login_user(request):
 
 def logout_user(request):    
     logout(request)
-    messages.success(request,("You have successfully logout!"))
+    messages.success(request,("You have successfully logout the account!"))
     return redirect('home')
 
 def product(request, pk):  
     product = Product.objects.get(id=pk)  # use singular name
     return render(request, 'product.html', {'product': product})
+
+def register_user(request):    
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            #log in user
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You have successfully registered and logged in!")
+                return redirect('home')
+        else:
+            messages.error(request, "Registration failed. Please correct the errors below.")
+            return render(request, 'register.html', {'form': form})
+    else:
+        form = SignUpForm()
+    return render(request, 'register.html', {'form': form})#pass form data
