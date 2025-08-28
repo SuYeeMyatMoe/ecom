@@ -255,9 +255,9 @@
                 style="max-width: 4rem"
               />
               <button class="btn btn-primary flex-shrink-0" type="button">
-                <i class="bi-cart-fill me-1"></i>
-                Add to cart
+                <i class="bi-cart-fill me-1"></i> View details
               </button>
+
             </div>
             <div class="mt-4">
               <span class="fw-bold">Delivery Time:</span> 30-45 minutes
@@ -311,8 +311,8 @@
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                   <div class="text-center">
-                    <a class="btn btn-primary mt-auto" href="#">
-                      Add to cart
+                    <a class="btn btn-primary mt-auto" href="{% url 'product' product.id %}">
+                      View details
                     </a>
                   </div>
                 </div>
@@ -349,7 +349,7 @@
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                   <div class="text-center">
-                    <a class="btn btn-outline-dark mt-auto" href="#">
+                    <a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">
                       View details
                     </a>
                   </div>
