@@ -1,4 +1,192 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block content %}
+<div class="container py-4 mb-5">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="">{{ product.category.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Product Image -->
+    <div class="col-md-6 mb-4">
+      <div class="card border-0 shadow-sm position-relative">
+        {% if product.is_sale %}
+          <div class="position-absolute top-0 start-0">
+            <span class="badge bg-danger text-white px-3 py-2 rounded-end">
+              🔥 SALE
+            </span>
+          </div>
+        {% endif %}
+        <div class="card-body p-3">
+          <img src="{{ product.image.url }}" class="img-fluid rounded product-detail-image" alt="{{ product.name }}" id="mainProductImage">
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+                <span class="badge bg-success mb-2">In Stock</span>
+              <span class="badge bg-info ms-1">{{ product.category.name }}</span>
+            </div>
+            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Add to Wishlist">
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+          
+          <h2 class="fw-bold mb-2">{{ product.name }}</h2>
+          
+          <div class="d-flex align-items-center mb-3">
+            <div class="text-warning me-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+            </div>
+            <span class="text-muted">(42 reviews)</span>
+          </div>
+
+          <!-- Pricing -->
+          {% if product.is_sale %}
+            <h4 class="text-muted text-decoration-line-through">${{ product.price }}</h4>
+            <h3 class="text-danger fw-bold mb-3">${{ product.sale_price }}</h3>
+          {% else %}
+            <h3 class="text-primary fw-bold mb-3">${{ product.price }}</h3>
+          {% endif %}
+          
+          <p class="text-muted mb-4">{{ product.description }}</p>
+
+          <!-- Key Features -->
+          <div class="mb-4">
+            <h5 class="fw-semibold">Key Features</h5>
+            <ul class="list-unstyled">
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i> Fresh ingredients</li>
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i> Customizable options available</li>
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i> Premium quality</li>
+            </ul>
+          </div>
+
+          <!-- Customization Options -->
+          <div class="mb-4">
+            <h5 class="fw-semibold">Customize Your Order</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="extraCheese">
+              <label class="form-check-label" for="extraCheese">
+                Extra Cheese (+$1.50)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="spicyOption">
+              <label class="form-check-label" for="spicyOption">
+                Make it Spicy (+$0.75)
+              </label>
+            </div>
+          </div>
+
+          <!-- Quantity + Add to Cart -->
+          <form method="post" action="">
+            {% csrf_token %}
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <label for="quantity" class="form-label fw-semibold">Quantity:</label>
+              </div>
+              <div class="col-auto">
+                <div class="input-group" style="width: 140px;">
+                  <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
+                  <input type="number" name="quantity" value="1" min="1" class="form-control text-center" id="quantityInput">
+                  <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
+                </div>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi-cart-fill me-2"></i> Add to Cart
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <hr class="my-4">
+          
+          <!-- Product Details Footer -->
+          <div class="row text-center">
+            <div class="col-4">
+              <div class="feature-icon">
+                <i class="bi bi-truck text-primary h4"></i>
+              </div>
+              <p class="small mb-0">Free Delivery<br><span class="text-muted">On orders over $25</span></p>
+            </div>
+            <div class="col-4">
+              <div class="feature-icon">
+                <i class="bi bi-arrow-clockwise text-primary h4"></i>
+              </div>
+              <p class="small mb-0">Easy Returns<br><span class="text-muted">30-day policy</span></p>
+            </div>
+            <div class="col-4">
+              <div class="feature-icon">
+                <i class="bi bi-shield-check text-primary h4"></i>
+              </div>
+              <p class="small mb-0">Secure Payment<br><span class="text-muted">Safe & encrypted</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-detail-image {
+    max-height: 400px;
+    width: 100%;
+    object-fit: contain;
+  }
+  .feature-icon {
+    margin-bottom: 10px;
+  }
+  #quantityInput {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+  #decrement, #increment {
+    width: 40px;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .container.py-4.mb-5 {
+    flex: 1;
+  }
+</style>
+
+<script>
+  // Quantity increment/decrement functionality
+  document.getElementById('decrement').addEventListener('click', function() {
+    const quantityInput = document.getElementById('quantityInput');
+    if (parseInt(quantityInput.value) > 1) {
+      quantityInput.value = parseInt(quantityInput.value) - 1;
+    }
+  });
+  
+  document.getElementById('increment').addEventListener('click', function() {
+    const quantityInput = document.getElementById('quantityInput');
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+  });
+
+  // Initialize tooltips
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  });
+</script>
 {% endblock %}

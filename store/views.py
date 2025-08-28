@@ -42,6 +42,6 @@ def logout_user(request):
     messages.success(request,("You have successfully logout!"))
     return redirect('home')
 
-def product(request,pk):  
-    products= Product.objects.get(id=pk)  #get product info by pk id
-    return render(request,'product.html',{'product':product})
+def product(request, pk):  
+    product = Product.objects.get(id=pk)  # use singular name
+    return render(request, 'product.html', {'product': product})
