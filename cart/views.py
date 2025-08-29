@@ -27,6 +27,7 @@ def cart_add(request):
         #response =JsonResponse({'Product Name: ':product.name})#will reference with product name (only for testing)
         response =JsonResponse({'qty':cart_quantity})#return quantity
         return response
+        #we can delete the quantity by deleting sessionid in storage by inspect, so it will cart quantity will start form again
 
 def cart_delete(request):
     pass
