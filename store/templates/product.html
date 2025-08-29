@@ -180,9 +180,10 @@
               action: 'post'
           },
           success: function(json) {
-              console.log(json);
+              // console.log(json);
               // Example: update cart counter
-              // $('#cart-count').text(json.cart_quantity);
+              document.getElementById("cart_quantity").
+              textContent=json.qty//from view.py for cart
           },
           error: function(xhr, errmsg, err) {
               console.log(errmsg);

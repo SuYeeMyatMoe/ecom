@@ -20,8 +20,12 @@ def cart_add(request):
         #save to session
         cart.add(product=product)
 
+        #get cart quantity
+        cart_quantity=cart.__len__()#access from cart.py request
+
         #Return response
-        response =JsonResponse({'Product Name: ':product.name})#will reference with product name
+        #response =JsonResponse({'Product Name: ':product.name})#will reference with product name (only for testing)
+        response =JsonResponse({'qty':cart_quantity})#return quantity
         return response
 
 def cart_delete(request):
