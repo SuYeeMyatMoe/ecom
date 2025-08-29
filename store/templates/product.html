@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="col-auto">
-                <button type="submit" class="btn btn-primary btn-lg">
+                <button type="button" class="btn btn-primary btn-lg" value="{{product.id}}" id="add-cart">
                   <i class="bi-cart-fill me-2"></i> Add to Cart
                 </button>
               </div>
@@ -166,6 +166,28 @@
     const quantityInput = document.getElementById('quantityInput');
     quantityInput.value = parseInt(quantityInput.value) + 1;
   });
+
+  //check if add to cart button is pressed
+  $(document).on('click','#add-cart',function(e){
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'{% url 'cart_add' %}',
+        data:{
+          product_id:$('#add-cart').val(),//will get value from add-cart
+          csrfmiddlewaretoke:'{{csrf_token}}',//csrf token (prevent from hijex in value)
+          action:'post'
+        },
+        success:function(json)
+        {
+          console.log(json)
+        },//what to do after we have done this
+
+        error:function(xhr,errmsg,err){
+
+        }
+      });//add to server without refreshing
+  })
 
   // Initialize tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
