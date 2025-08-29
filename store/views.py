@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Product#import Product models from Database
+from .models import Product, Category#import Product and Category models from Database
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages#to inform user with messages for errors
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
+
 
 # Create your views here.
 def home(request):#wanna pass the request in here
@@ -72,3 +73,16 @@ def register_user(request):
     else:
         form = SignUpForm()
     return render(request, 'register.html', {'form': form})#pass form data
+
+def category(request,food):#pass request and food
+    #replace Hyphens with spaces
+    food=food.replace('-',' ')
+    #grab category from URL (look up category in dbs)
+    try:
+        #look up the category that is named with food in Category model
+        category=Category.objects.get(name=food)
+        products= Product.objects.filter(category=category)
+        return render(request,'category.html',{'product':products,'category':category})
+    except:
+         messages.success(request, ("This category doesn't exist!"))
+         return redirect('home')
