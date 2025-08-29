@@ -82,7 +82,7 @@ def category(request,food):#pass request and food
         #look up the category that is named with food in Category model
         category=Category.objects.get(name=food)
         products= Product.objects.filter(category=category)
-        return render(request,'category.html',{'product':products,'category':category})
+        return render(request,'category.html',{'products':products,'category':category})
     except:
          messages.success(request, ("This category doesn't exist!"))
          return redirect('home')
