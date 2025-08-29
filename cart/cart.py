@@ -12,3 +12,14 @@ class Cart():
 
         #make sure cart is working on every pages and files
         self.cart=cart
+
+    def add(self,product):
+        product_id=str(product.id)
+
+        #logic 
+        if product_id in self.cart:#(if they are already added) pass
+            pass
+        else:
+            self.cart[product_id]={'price': str(product.price)}    
+        self.session.modified= True
+

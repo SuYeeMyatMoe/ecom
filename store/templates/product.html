@@ -33,7 +33,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-2">
             <div>
-                <span class="badge bg-success mb-2">In Stock</span>
+              <span class="badge bg-success mb-2">In Stock</span>
               <span class="badge bg-info ms-1">{{ product.category.name }}</span>
             </div>
             <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Add to Wishlist">
@@ -73,7 +73,6 @@
               <li><i class="bi bi-check-circle-fill text-success me-2"></i> Premium quality</li>
             </ul>
           </div>
-
 
           <!-- Quantity + Add to Cart -->
           <form method="post" action="">
@@ -152,44 +151,46 @@
     flex: 1;
   }
 </style>
+{% endblock %}  
 
+{% block scripts %}
 <script>
-  // Quantity increment/decrement functionality
+  // Quantity increment/decrement
   document.getElementById('decrement').addEventListener('click', function() {
     const quantityInput = document.getElementById('quantityInput');
     if (parseInt(quantityInput.value) > 1) {
       quantityInput.value = parseInt(quantityInput.value) - 1;
     }
   });
-  
   document.getElementById('increment').addEventListener('click', function() {
     const quantityInput = document.getElementById('quantityInput');
     quantityInput.value = parseInt(quantityInput.value) + 1;
   });
 
-  //check if add to cart button is pressed
-  $(document).on('click','#add-cart',function(e){
+  // Add to cart AJAX
+  $(document).on('click', '#add-cart', function(e){
       e.preventDefault();
       $.ajax({
-        type:'POST',
-        url:'{% url 'cart_add' %}',
-        data:{
-          product_id:$('#add-cart').val(),//will get value from add-cart
-          csrfmiddlewaretoke:'{{csrf_token}}',//csrf token (prevent from hijex in value)
-          action:'post'
-        },
-        success:function(json)
-        {
-          console.log(json)
-        },//what to do after we have done this
+          type: 'POST',
+          url: "{% url 'cart_add' %}",
+          data: {
+              product_id: $(this).val(),
+              quantity: $('#quantityInput').val(),
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              action: 'post'
+          },
+          success: function(json) {
+              console.log(json);
+              // Example: update cart counter
+              // $('#cart-count').text(json.cart_quantity);
+          },
+          error: function(xhr, errmsg, err) {
+              console.log(errmsg);
+          }
+      });
+  });
 
-        error:function(xhr,errmsg,err){
-
-        }
-      });//add to server without refreshing
-  })
-
-  // Initialize tooltips
+  // Tooltips init
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
