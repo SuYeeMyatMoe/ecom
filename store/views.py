@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
+from django.core.paginator import Paginator
+
 
 
 # Create your views here.
@@ -86,3 +88,12 @@ def category(request,food):#pass request and food
     except:
          messages.success(request, ("This category doesn't exist!"))
          return redirect('home')
+    
+def foods(request):
+    product_list = Product.objects.all().order_by('-id')   # show all products
+    paginator = Paginator(product_list, 12)  # 12 products per page
+    
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    
+    return render(request, 'foods.html', {'products': products})    

@@ -12,7 +12,7 @@
           <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#!">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'foods' %}">Foods</a></li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -24,7 +24,7 @@
             >Categories</a
           >
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'home' %}">All Food</a></li>
+            <li><a class="dropdown-item" href="{% url 'foods' %}">All Food</a></li>
             <li><a class="dropdown-item" href="{% url 'category' 'Fast Food' %}">Fast Foods</a></li>
             <li><a class="dropdown-item" href="{% url 'category' 'Japanese Food' %}">Japanese Food</a></li>
             <li><a class="dropdown-item" href="{% url 'category' 'Desserts' %}">Desserts</a></li>

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* reuse the same food-card styles as in category.html */
+  .food-card {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      background: #fff;
+      height: 100%;
+      position: relative;
+  }
+  .food-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.15);
+  }
+  .food-card img {
+      transition: transform 0.4s ease;
+      object-fit: cover;
+      height: 220px;
+      width: 100%;
+  }
+  .food-card:hover img { transform: scale(1.05); }
+  .food-card .badge {
+      font-size: 0.8rem; font-weight: 600; border-radius: 30px;
+      padding: 6px 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  }
+  .food-card .card-body h5 { font-weight: 700; margin-bottom: 0.3rem; }
+  .food-card .card-body h6 { font-size: 0.9rem; color: #6c757d; }
+  .food-card .price { margin-top: 0.6rem; }
+  .food-card .price .old { text-decoration: line-through; color: #999; margin-right: 0.5rem; }
+  .food-card .price .new { font-weight: 700; color: #e63946; font-size: 1.1rem; }
+</style>
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">All Foods</h2>
+        <p class="text-muted">{{ products.paginator.count }} products available</p>
+    </div>
+    
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="food-card card h-100">
+                {% if product.is_sale %}
+                <div class="position-absolute top-0 start-0">
+                    <span class="badge bg-danger text-white px-3 py-2 rounded-end">🔥 SALE</span>
+                </div>
+                {% endif %}
+                <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h5 class="fw-bolder">{{ product.name }}</h5>
+                        <h6 class="text-muted">{{ product.category }}</h6>
+                        {% if product.is_sale %}
+                        <div class="price">
+                            <span class="old">${{ product.price }}</span>
+                            <span class="new">${{ product.sale_price }}</span>
+                        </div>
+                        {% else %}
+                        <span class="fw-bold">${{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        <a class="btn btn-primary mt-auto" href="{% url 'product' product.id %}">View details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if products.has_other_pages %}
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+            {% if products.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+
+            {% for i in products.paginator.page_range %}
+            <li class="page-item {% if products.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+
+            {% if products.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
