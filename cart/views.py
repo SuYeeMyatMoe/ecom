@@ -5,7 +5,10 @@ from django.http import JsonResponse#json response
 
 # Create your views here.
 def cart_summary(request):
-    return render(request,"cart_summary.html",{})
+    #get the cart
+    cart=Cart(request)
+    cart_products= cart.get_items#access from cart.py
+    return render(request,"cart_summary.html",{"cart_products":cart_products})#return cart_products to the cart summary page
 
 def cart_add(request):
     #get the cart

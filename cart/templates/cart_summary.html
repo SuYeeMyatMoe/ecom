@@ -93,10 +93,12 @@
         </ol>
     </nav>
 </div>
+<!-- {{ cart_products }} -->
+<!-- testing if the data appears -->
 
 <!-- Cart Content -->
 <div class="container mb-5">
-    {% if cart_items %}
+    {% if cart_products %}
     <div class="row">
         <!-- Cart Items -->
         <div class="col-lg-8">
@@ -107,43 +109,34 @@
                             <tr>
                                 <th scope="col">Product</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in cart_items %}
+                            {% for product in cart_products %}
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-image me-3">
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cart-item-image me-3">
                                         <div>
-                                            <h6 class="mb-0">{{ item.product.name }}</h6>
-                                            <small class="text-muted">{{ item.product.category }}</small>
+                                            <h6 class="mb-0">{{ product.name }}</h6>
+                                            <small class="text-muted">{{ product.category }}</small>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     {% if item.product.is_sale %}
-                                    <span class="text-muted text-decoration-line-through">${{ item.product.price }}</span>
-                                    <span class="fw-bold text-danger">${{ item.product.sale_price }}</span>
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                                    <span class="fw-bold text-danger">${{product.sale_price }}</span>
                                     {% else %}
-                                    <span class="fw-bold">${{ item.product.price }}</span>
+                                    <span class="fw-bold">${{ product.price }}</span>
                                     {% endif %}
                                 </td>
+
+                                <td class="fw-bold">${{ total_price }}</td>
                                 <td>
-                                    <div class="d-flex">
-                                        <form method="post" action="{% url 'update_cart' item.product.id %}">
-                                            {% csrf_token %}
-                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control quantity-input">
-                                            <button type="submit" class="btn btn-sm btn-outline-primary mt-1">Update</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="fw-bold">${{ item.total_price }}</td>
-                                <td>
-                                    <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm btn-outline-danger">
+                                    <a href="" class="btn btn-sm btn-outline-danger">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
@@ -158,7 +151,7 @@
                 <a href="{% url 'home' %}" class="btn btn-outline-primary">
                     <i class="bi bi-arrow-left me-2"></i>Continue Shopping
                 </a>
-                <a href="{% url 'clear_cart' %}" class="btn btn-outline-danger">
+                <a href="" class="btn btn-outline-danger">
                     <i class="bi bi-cart-x me-2"></i>Clear Cart
                 </a>
             </div>
@@ -187,7 +180,7 @@
                 </div>
                 
                 <div class="d-grid gap-2 mt-4">
-                    <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg">
+                    <a href="" class="btn btn-primary btn-lg">
                         Proceed to Checkout
                     </a>
                 </div>
@@ -195,18 +188,9 @@
                 <div class="mt-4">
                     <p class="text-muted small">
                         <i class="bi bi-info-circle me-1"></i>
-                        Your order will be delivered in 30-45 minutes. Free delivery on orders over $25.
+                        Your order will be delivered in 30-45 minutes.
                     </p>
                 </div>
-            </div>
-            
-            <!-- Promo Code -->
-            <div class="summary-card mt-4">
-                <h5 class="mb-3">Apply Promo Code</h5>
-                <form class="d-flex">
-                    <input type="text" class="form-control me-2" placeholder="Enter code">
-                    <button class="btn btn-outline-primary">Apply</button>
-                </form>
             </div>
         </div>
     </div>

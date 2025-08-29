@@ -30,7 +30,7 @@ class Cart():
         #get ids form cart
         product_ids=self.cart.keys()
         #use id to lookup products in database
-        products=Products.objects.filter(id_in=product_ids)
+        products=Product.objects.filter(id__in=product_ids)
 
-        #return those looked up food item prodcuts
+        #return those looked up food item products
         return products
