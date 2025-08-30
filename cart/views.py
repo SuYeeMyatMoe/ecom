@@ -35,7 +35,17 @@ def cart_add(request):
         #we can delete the quantity by deleting sessionid in storage by inspect, so it will cart quantity will start form again
 
 def cart_delete(request):
-    pass
+    cart=Cart(request)
+    if request.POST.get('action')=='post':
+        #get stuff
+        product_id=int(request.POST.get('product_id'))
+        #call delete function
+        cart.delete(product=product_id)
+
+        #Return response
+        #response =JsonResponse({'Product Name: ':product.name})#will reference with product name (only for testing)
+        response =JsonResponse({'product':product_id})#return quantity
+        return response
 
 def cart_update(request):
     pass

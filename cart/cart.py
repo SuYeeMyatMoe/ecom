@@ -13,19 +13,20 @@ class Cart():
         #make sure cart is working on every pages and files
         self.cart=cart
 
-    def add(self,product,quantity):
-        product_id=str(product.id)
-        product_qty=str(quantity)
-        #logic 
-        if product_id in self.cart:#(if they are already added) pass
-            pass
+    def add(self, product, quantity):
+        product_id = str(product.id)
+        product_qty = int(quantity)
+
+        if product_id in self.cart:
+            self.cart[product_id] += product_qty   #  increment
         else:
-            # self.cart[product_id]={'price': str(product.price)}    
-            self.cart[product_id]=int(product_qty)
-        self.session.modified= True
+            self.cart[product_id] = product_qty    # first time add
+
+        self.session.modified = True
+
 
     def __len__(self):#will give filter to get len of things
-        return len(self.cart)#will give the quantity of the cart
+        return sum(self.cart.values())#will give the quantity of the cart
 
     def get_items(self):#to see what is in the cart
         #get ids form cart

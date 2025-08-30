@@ -126,20 +126,28 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {% if item.product.is_sale %}
+                                    {% if product.is_sale %}
                                     <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
                                     <span class="fw-bold text-danger">${{product.sale_price }}</span>
                                     {% else %}
                                     <span class="fw-bold">{{ product.price }}</span>
                                     {% endif %}
                                 </td>
+                                {% for key, value in cart_quantity.items %}
+                                    {% if key == product.id|stringformat:"s" %}
+                                    <td class="fw-bold">{{ value }}</td>
+                                    {% endif %}
+                                {% endfor %}
 
-                                <td class="fw-bold">${{ total_price }}</td>
+
                                 <td>
-                                    <a href="" class="btn btn-sm btn-outline-danger">
+                                    <a href="" 
+                                       class="btn btn-sm btn-outline-danger delete-product" 
+                                       data-index="{{ product.id }}">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
+                                
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -210,6 +218,33 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}  
+{% block scripts %}
+<script>
+$(document).on("click", ".delete-product", function (e) {
+    e.preventDefault();
 
+    const productId = $(this).data("index");
 
+    $.ajax({
+        type: "POST",
+        url: "{% url 'cart_delete' %}",
+        data: {
+            product_id: productId,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post"
+        },
+        success: function (json) {
+            if (json.success) {
+                location.reload();
+            } else {
+                alert("Error removing product.");
+            }
+        },
+        error: function (xhr, errmsg, err) {
+            console.log(errmsg);
+        }
+    });
+});
+</script>
 {% endblock %}
