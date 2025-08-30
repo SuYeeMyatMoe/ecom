@@ -172,7 +172,7 @@
                 
                 <div class="summary-item">
                     <span>Subtotal:</span>
-                    <span>${{ cart_subtotal }}</span>
+                    <span>${{ totals }}</span>
                 </div>
                 <div class="summary-item">
                     <span>Delivery Fee:</span>
@@ -224,22 +224,16 @@
 $(document).on("click", ".delete-product", function (e) {
     e.preventDefault();
 
-    const productId = $(this).data("index");
-
     $.ajax({
         type: "POST",
         url: "{% url 'cart_delete' %}",
         data: {
-            product_id: productId,
+            product_id: $(this).data('index'),
             csrfmiddlewaretoken: "{{ csrf_token }}",
             action: "post"
         },
         success: function (json) {
-            if (json.success) {
                 location.reload();
-            } else {
-                alert("Error removing product.");
-            }
         },
         error: function (xhr, errmsg, err) {
             console.log(errmsg);
