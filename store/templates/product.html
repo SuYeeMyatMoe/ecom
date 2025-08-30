@@ -84,7 +84,7 @@
               <div class="col-auto">
                 <div class="input-group" style="width: 140px;">
                   <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
-                  <input type="number" name="quantity" value="1" min="1" class="form-control text-center" id="quantityInput">
+                  <input type="number" name="quantity" value="1" min="1" class="form-control text-center" id="qty-cart">
                   <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
                 </div>
               </div>
@@ -175,7 +175,7 @@
           url: "{% url 'cart_add' %}",
           data: {
               product_id: $(this).val(),
-              quantity: $('#quantityInput').val(),
+              product_qty: $('#qty-cart option:selected').text(),
               csrfmiddlewaretoken: '{{ csrf_token }}',
               action: 'post'
           },
