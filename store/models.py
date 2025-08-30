@@ -1,7 +1,35 @@
 from django.db import models
 import datetime# to know the date time and order 
+from django.contrib.auth.models import User#login with django auth model
+from django.db.models.signals import post_save#automactically create profile model with signal
 
 # Models are in here
+class Profile(models.Model):
+    #associate this model with django auth user model
+    user=models.OneToOneField(User, on_delete=models.CASCADE)#one profile with one user 
+    # (when they delete their profile, they delete associate profile)
+    date_motified= models.DateTimeField(User, auto_now=True)#to know when they modify the info
+    phone=models.CharField(max_length=20,blank=True)#to be able to add many char like + and space
+    address1=models.CharField(max_length=200,blank=True)
+    address2= models.CharField(max_length=200,blank=True)
+    city=models.CharField(max_length=200,blank=True)
+    state=models.CharField(max_length=200,blank=True)
+    zipcode=models.CharField(max_length=200,blank=True)
+
+    def __str__(self):
+        return self.user.username
+    
+#create a user profile by default when they register
+def create_profile(sender,instance,created,**kwargs):
+    if created:
+        user_profile=Profile(user=instance)
+        user_profile.save()#save the created profile
+
+#automate the profile thing
+post_save.connect(create_profile,sender=User) 
+#python manage.py makemigrations
+# python manage.py migrate           
+
 #Category
 class Category(models.Model):
     name=models.CharField(max_length=50)
