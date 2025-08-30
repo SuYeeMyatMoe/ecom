@@ -25,4 +25,9 @@ class UserAdmin(admin.ModelAdmin):
     model=User
     fields=["username","first_name","last_name","email"]#what I want from User model from Django auth
     inlines=[ProfileInline]
-    
+
+#unregister the old way
+admin.site.unregister(User)
+
+#register the new way
+admin.site.register(User,UserAdmin)
