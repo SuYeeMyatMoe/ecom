@@ -115,4 +115,4 @@ def update_user(request):
         return redirect('login')  # better to send them to login instead of home
 
 def update_info(request):
-    pass
+    return render(request, "update_info.html", {})
