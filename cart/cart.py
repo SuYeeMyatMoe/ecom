@@ -35,3 +35,7 @@ class Cart():
 
         #return those looked up food item products
         return products
+    
+    def get_quants(self):
+        quantities=self.cart
+        return quantities
