@@ -109,7 +109,7 @@
                             <tr>
                                 <th scope="col">Product</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Quantity</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -130,7 +130,7 @@
                                     <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
                                     <span class="fw-bold text-danger">${{product.sale_price }}</span>
                                     {% else %}
-                                    <span class="fw-bold">${{ product.price }}</span>
+                                    <span class="fw-bold">{{ product.price }}</span>
                                     {% endif %}
                                 </td>
 
