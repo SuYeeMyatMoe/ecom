@@ -15,5 +15,6 @@ urlpatterns = [
     path('category/<str:food>/',views.category,name='category'),#pass string for category to be different 
     path('foods/', views.foods, name='foods'),
     path('update_user/',views.update_user,name='update_user'),
+    path('update_info/',views.update_info,name='update_info'),
 
 ]
