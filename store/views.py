@@ -113,3 +113,6 @@ def update_user(request):
     else:
         messages.error(request, "Please login to update your profile.")
         return redirect('login')  # better to send them to login instead of home
+
+def update_info(request):
+    pass
