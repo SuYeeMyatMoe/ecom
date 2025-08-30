@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages#to inform user with messages for errors
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateUserForm
 from django import forms
 from django.core.paginator import Paginator
 
@@ -97,3 +97,19 @@ def foods(request):
     products = paginator.get_page(page_number)
     
     return render(request, 'foods.html', {'products': products})    
+
+def update_user(request):
+    if request.user.is_authenticated:  # only logged-in users can update
+        current_user = request.user
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, "Your profile has been updated!")
+            return redirect('home')
+
+        return render(request, 'update_user.html', {'user_form': user_form})
+
+    else:
+        messages.error(request, "Please login to update your profile.")
+        return redirect('login')  # better to send them to login instead of home

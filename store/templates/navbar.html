@@ -30,6 +30,7 @@
             <li><a class="dropdown-item" href="{% url 'category' 'Desserts' %}">Desserts</a></li>
           </ul>
         </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'update_user' %}">Profile</a></li>
         {% if user.is_authenticated %}
         <!-- if user is login, show this(if we login in django admin, it will show as logout) -->
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>

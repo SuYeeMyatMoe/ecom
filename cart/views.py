@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404 # look up product and giv
 from .cart import Cart#access cart from this page
 from store.models import Product#access product from store model
 from django.http import JsonResponse#json response
+from decimal import Decimal
+
 
 # Create your views here.
 def cart_summary(request):
@@ -9,8 +11,24 @@ def cart_summary(request):
     cart=Cart(request)
     cart_products= cart.get_items#access from cart.py
     cart_quantity=cart.get_quants
-    totals=cart.cart_total()
-    return render(request,"cart_summary.html",{"cart_products":cart_products,"cart_quantity":cart_quantity,"totals":totals})#return cart_products to the cart summary page
+    subtotal = cart.cart_total()  # subtotal is already Decimal if prices are DecimalField
+
+    # Make delivery fee and tax Decimal
+    delivery_fee = Decimal('5.00')          # fixed fee
+    tax_rate = Decimal('0.07')              # 7% tax
+    tax = (subtotal * tax_rate).quantize(Decimal('0.01'))  # round to 2 decimal places
+
+    total = (subtotal + delivery_fee + tax).quantize(Decimal('0.01'))
+
+    context = {
+        "cart_products": cart_products,
+        "cart_quantity": cart_quantity,
+        "totals": subtotal,
+        "delivery_fee": delivery_fee,
+        "tax": tax,
+        "cart_total": total,
+    }
+    return render(request, "cart_summary.html", context)
 
 def cart_add(request):
     #get the cart
