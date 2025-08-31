@@ -3,8 +3,9 @@ from .models import Product, Category#import Product and Category models from Da
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages#to inform user with messages for errors
 from django.contrib.auth.models import User
+from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserForm
+from .forms import SignUpForm, UpdateUserForm, UserInfoForm
 from django import forms
 from django.core.paginator import Paginator
 
@@ -114,5 +115,22 @@ def update_user(request):
         messages.error(request, "Please login to update your profile.")
         return redirect('login')  # better to send them to login instead of home
 
+    
 def update_info(request):
-    return render(request, "update_info.html", {})
+    if request.user.is_authenticated:
+        current_user = request.user
+        # get or create Profile linked with the user
+        profile, created = Profile.objects.get_or_create(user=current_user)
+
+        form = UserInfoForm(request.POST or None, instance=profile)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your delivery info has been updated!")
+            return redirect('home')
+
+        return render(request, 'update_info.html', {'form': form})
+
+    else:
+        messages.error(request, "Please login to update your delivery info.")
+        return redirect('login')
