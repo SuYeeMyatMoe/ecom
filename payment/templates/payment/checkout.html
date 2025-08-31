@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .checkout-header {
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .checkout-table {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .checkout-table thead th {
+        background-color: #ff6b35;
+        color: white;
+        border: none;
+        padding: 1rem;
+    }
+    
+    .checkout-table tbody td {
+        padding: 1.2rem;
+        vertical-align: middle;
+    }
+    
+    .checkout-item-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .summary-card {
+        background-color: #f8f9fa;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+    }
+    
+    .summary-total {
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-top: 2px solid #dee2e6;
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .form-control:focus {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+    }
+    
+    .delivery-time {
+        background-color: #e7f5ff;
+        border-left: 4px solid #339af0;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+</style>
+
+<!-- Checkout Header -->
+<section class="checkout-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3">Checkout</h1>
+        <p class="lead">Complete your order with delivery information</p>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cart_summary' %}">Cart</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Checkout Content -->
+<div class="container mb-5">
+    <div class="row">
+        <!-- LEFT COLUMN: Order Summary -->
+        <div class="col-lg-5">
+            <div class="card checkout-table mb-4">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Order Summary</h4>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col" class="text-end">Price</th>
+                                <th scope="col" class="text-center">Qty</th>
+                                <th scope="col" class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_items %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="checkout-item-image me-3">
+                                        <div>
+                                            <h6 class="mb-0">{{ item.product.name }}</h6>
+                                            <small class="text-muted">{{ item.product.category }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    {% if item.product.is_sale %}
+                                        <span class="text-muted text-decoration-line-through">${{ item.product.price }}</span>
+                                        <span class="fw-bold text-danger">${{ item.product.sale_price }}</span>
+                                    {% else %}
+                                        <span class="fw-bold">${{ item.product.price }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center fw-bold">{{ item.qty }}</td>
+                                <td class="text-end fw-bold">${{ item.line_total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <h5 class="mb-3">Order Details</h5>
+                
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span>${{ subtotal|floatformat:2 }}</span>
+                </div>                
+                <div class="summary-item">
+                    <span>Delivery Fee:</span>
+                    <span>${{ delivery_fee }}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Tax:</span>
+                    <span>${{ tax }}</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total:</span>
+                    <span>${{ cart_total }}</span>
+                </div>
+                
+                <div class="delivery-time mt-3">
+                    <h6><i class="bi bi-clock me-2"></i>Estimated Delivery Time</h6>
+                    <p class="mb-0">30-45 minutes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Update Info Form + Payment -->
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Delivery Information</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'checkout' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        <hr class="my-4">
+
+                        <h5 class="mb-3">Payment Method</h5>
+                        <div class="form-check mb-3">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label class="form-check-label" for="credit">Credit card</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="debit">Debit card</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="paypal">Cash on Delivery</label>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="">
+                                <small class="text-muted">Full name as displayed on card</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number" class="form-label">Credit card number</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" type="submit">Place Order</button>
+                        
+                        <div class="mt-3 text-center">
+                            <a href="{% url 'cart_summary' %}" class="btn btn-link">
+                                <i class="bi bi-arrow-left me-1"></i>Return to Cart
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        
+        <!-- Customer Information Form
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Delivery Information</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'checkout' %}">
+                        {% csrf_token %}
+                        
+ 
+                        
+                        <hr class="my-4">
+                        
+                        <h5 class="mb-3">Payment Method</h5>
+                        
+                        <div class="form-check mb-3">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label class="form-check-label" for="credit">Credit card</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="debit">Debit card</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="paypal">Cash on Delivery</label>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="">
+                                <small class="text-muted">Full name as displayed on card</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number" class="form-label">Credit card number</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="">
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <button class="btn btn-primary btn-lg w-100" type="submit">Place Order</button>
+                        
+                        <div class="mt-3 text-center">
+                            <a href="{% url 'cart_summary' %}" class="btn btn-link">
+                                <i class="bi bi-arrow-left me-1"></i>Return to Cart
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> -->
+ 
+{% endblock %}

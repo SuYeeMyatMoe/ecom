@@ -112,6 +112,7 @@ class Cart():
                     else:
                         total += product.price * value 
         return total
+    
 
 
 

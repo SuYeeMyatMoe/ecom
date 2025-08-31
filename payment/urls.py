@@ -5,7 +5,6 @@ from . import views
 
 urlpatterns = [
 
-    path('payment_success',views.payment_success,name='payment_success'),#Url for home page (view.home is file name) 
-    
-
+    path('payment_success',views.payment_success,name='payment_success'),
+    path('checkout',views.checkout,name='checkout'),
 ]
