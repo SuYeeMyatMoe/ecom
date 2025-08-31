@@ -68,8 +68,8 @@ def register_user(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, "You have successfully registered and logged in!")
-                return redirect('home')
+                messages.success(request, "Your profile is successfully created, Please also fill delivery info in below!")
+                return redirect('update_info')
         else:
             messages.error(request, "Registration failed. Please correct the errors below.")
             return render(request, 'register.html', {'form': form})

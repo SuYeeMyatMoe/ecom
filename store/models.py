@@ -15,6 +15,7 @@ class Profile(models.Model):
     city=models.CharField(max_length=200,blank=True)
     state=models.CharField(max_length=200,blank=True)
     zipcode=models.CharField(max_length=200,blank=True)
+    old_cart=models.CharField(max_length=200,blank=True,null=True)#will convert python dictionary shopping cart to a string
 
     def __str__(self):
         return self.user.username
