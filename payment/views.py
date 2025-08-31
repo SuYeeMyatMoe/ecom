@@ -61,8 +61,4 @@ def checkout(request):
         "form": form, 
     })
 
-#create order model
-
-#create order item model
-
 
