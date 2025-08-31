@@ -1,7 +1,11 @@
-from store.models import Product #access Product model to get product ids
+from store.models import Product,Profile #access Product and Profile model to get product ids
+
 class Cart():
     def __init__(self,request):
         self.session= request.session
+
+        #get request when cart is initialized
+        self.request=request
 
         #get the current session key if exists 
         cart= self.session.get('session_key')
@@ -24,6 +28,16 @@ class Cart():
 
         self.session.modified = True
 
+        #deal with logged in user
+        if self.request.user.is_authenticated:
+            #get current user profile
+            current_user=Profile.objects.filter(user__id=self.request.user.id)
+            #have to convert dic to string with json and json do not accept single quote in key as string in dic so must convert to double quote
+            #{'3':1,'2':4} to {"3":1,"2":4}
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            #save carty to profile model
+            current_user.update(old_cart=str(carty))
 
     def __len__(self):#will give filter to get len of things
         return sum(self.cart.values())#will give the quantity of the cart
