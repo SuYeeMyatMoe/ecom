@@ -8,7 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, UserInfoForm
 from django import forms
 from django.core.paginator import Paginator
-
+import json
+from cart.cart import Cart
 
 
 # Create your views here.
@@ -39,6 +40,26 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:#if login success, we let them login
             login(request,user)#login builtin function 
+
+            #do shopping cart stuff
+            current_user=Profile.objects.get(user__id=request.user.id)
+
+            #get their saved cart from dbs
+            saved_cart=current_user.old_cart
+
+            #convert dbs string to python dictionary
+            if saved_cart:# there is something in cart
+
+                #convert to dic using json (because json convert str to dic very easily)
+                converted_cart=json.loads(saved_cart)
+                #add loaded cart dic to session
+
+                #get cart
+                cart=Cart(request)#from Cart class model in cart.py
+                for key,value in converted_cart.items():#loop through the cart dic items and add items from dbs
+                    cart.db_add(product=key,quantity=value)#must create db_add in cart.py to get them
+
+
             messages.success(request, "You have successfully login!")
             return redirect('home')
         else:
