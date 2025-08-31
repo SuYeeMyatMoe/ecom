@@ -17,6 +17,28 @@ class Cart():
         #make sure cart is working on every pages and files
         self.cart=cart
 
+    def db_add(self, product, quantity):
+        product_id = str(product)
+        product_qty = int(quantity)
+
+        if product_id in self.cart:
+            self.cart[product_id] += product_qty   #  increment
+        else:
+            self.cart[product_id] = product_qty    # first time add
+
+        self.session.modified = True
+
+        #deal with logged in user
+        if self.request.user.is_authenticated:
+            #get current user profile
+            current_user=Profile.objects.filter(user__id=self.request.user.id)
+            #have to convert dic to string with json and json do not accept single quote in key as string in dic so must convert to double quote
+            #{'3':1,'2':4} to {"3":1,"2":4}
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            #save carty to profile model
+            current_user.update(old_cart=str(carty))
+
     def add(self, product, quantity):
         product_id = str(product.id)
         product_qty = int(quantity)
