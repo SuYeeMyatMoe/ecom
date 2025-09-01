@@ -6,10 +6,10 @@ class DeliveryAddress(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     full_name=models.CharField(max_length=250)
     email=models.EmailField(max_length=250)
-    address=models.TextField(max_length=250)
-    city=models.TextField(max_length=250,null=True,blank=True)
-    state=models.TextField(max_length=250,null=True,blank=True)
-    zipcode=models.TextField(max_length=250)
+    deliver_address=models.TextField(max_length=250)
+    deliver_city=models.TextField(max_length=250,null=True,blank=True)
+    deliver_state=models.TextField(max_length=250,null=True,blank=True)
+    deliver_zipcode=models.TextField(max_length=250)
 
     #don't pluralize address
     class Meta:

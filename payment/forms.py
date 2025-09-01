@@ -1,4 +1,57 @@
 from django import forms
+from .models import DeliveryAddress
+
+class DeliveryForm(forms.ModelForm):
+    delivery_full_name= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+    delivery_email= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+    delivery_address= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+    delivery_city= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+    delivery_state= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+    delivery_zipcode= forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone'
+        }),
+        required=True
+    )
+
+
 
 class PaymentForm(forms.Form):
     card_name = forms.CharField(
