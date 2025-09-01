@@ -2,6 +2,22 @@ from django.db import models
 from django.contrib.auth.models import User
 from store.models import Product
 
+class DeliveryAddress(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+    full_name=models.CharField(max_length=250)
+    email=models.EmailField(max_length=250)
+    address=models.TextField(max_length=250)
+    city=models.TextField(max_length=250,null=True,blank=True)
+    state=models.TextField(max_length=250,null=True,blank=True)
+    zipcode=models.TextField(max_length=250)
+
+    #don't pluralize address
+    class Meta:
+        verbose_name_plural="Delivery Address"
+
+    def __str__(self):
+        return f'Delivery Address - {str(self.id)}'
+
 
 #create order model
 class Order(models.Model):

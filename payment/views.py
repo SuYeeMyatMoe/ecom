@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from cart.cart import Cart#access cart from this page
 from decimal import Decimal
 from store.forms import UserInfoForm
 from store.models import Profile   
 from store.models import Product
+from payment.forms import PaymentForm
+from django.contrib import messages
 
 # Create your views here.
 def payment_success(request):
@@ -61,4 +63,62 @@ def checkout(request):
         "form": form, 
     })
 
+# def billing_info(request):
+#     cart = Cart(request)
+#     cart_products = cart.get_items()
+#     cart_quantity = cart.get_quants()
 
+#     order_items = []
+#     subtotal = Decimal("0.00")
+
+#     for product in cart_products:
+#         qty = cart_quantity.get(str(product.id), 0)
+#         if product.is_sale:
+#             line_total = Decimal(qty) * product.sale_price
+#         else:
+#             line_total = Decimal(qty) * product.price
+#         subtotal += line_total
+
+#         order_items.append({
+#             "product": product,
+#             "qty": qty,
+#             "line_total": line_total,
+#         })
+
+#     delivery_fee = Decimal("5.00")
+#     tax_rate = Decimal("0.06")
+#     tax = (subtotal * tax_rate).quantize(Decimal("0.01"))
+#     cart_total = subtotal + delivery_fee + tax
+
+#     if request.method == "POST":
+#         form = PaymentForm(request.POST)
+#         if form.is_valid():
+#             #  Save delivery/payment info into session
+#             request.session["billing_info"] = form.cleaned_data  
+
+#             return redirect("process_order")  # move to next step
+#     else:
+#         form = PaymentForm()
+
+#     return render(request, "payment/billing_info.html", {
+#         "order_items": order_items,
+#         "subtotal": subtotal,
+#         "delivery_fee": delivery_fee,
+#         "tax": tax,
+#         "cart_total": cart_total,
+#         "form": form,
+#     })
+
+
+# def process_order(request):
+#     if request.POST:
+#         payment_form=PaymentForm(request.POST or None)
+#         #get delivery session data
+#         billing_info = request.session.get("billing_info", {})
+#         print(billing_info)
+
+#         messages.success(request,"Order is placed")
+#         return redirect('home')
+#     else:
+#         messages.success(request,"Order is denied")
+#         return redirect('home')
