@@ -185,7 +185,10 @@ def process_order(request):
             quantity=qty,
             price=price
         )
-
+    # Clear cart & session
+    cart.clear()
+    request.session.pop("my_delivery", None)
+    request.session.pop("billing_info", None)
     messages.success(request, "Your order is successfully placed")
     return redirect("home")
 

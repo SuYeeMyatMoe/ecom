@@ -113,6 +113,19 @@ class Cart():
                         total += product.price * value 
         return total
     
+    def clear(self):
+        # Remove all items from the cart
+        self.session['session_key'] = {}
+        self.session.modified = True
+
+        # Deal with logged in user (reset old_cart in profile)
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            current_user.update(old_cart="{}")
+
+        # Reset internal cart dict too
+        self.cart = {}
+    
 
 
 
