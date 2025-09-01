@@ -190,6 +190,15 @@ def process_order(request):
     request.session.pop("my_delivery", None)
     request.session.pop("billing_info", None)
     messages.success(request, "Your order is successfully placed")
-    return redirect("home")
+    return redirect("order_confirmation", order_id=create_order.id)
+
+def order_confirmation(request, order_id):
+    order = Order.objects.get(id=order_id)
+    order_items = OrderItem.objects.filter(order=order)
+
+    return render(request, "payment/order_confirmation.html", {
+        "order": order,
+        "order_items": order_items,
+    })
 
 

@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .confirmation-header {
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .confirmation-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 1.5rem;
+    }
+    
+    .confirmation-card .card-header {
+        background-color: #ff6b35;
+        color: white;
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+    }
+    
+    .confirmation-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    /* Circular Progress Bar */
+    .progress-circle {
+        width: 180px;
+        height: 180px;
+        margin: 2rem auto;
+        position: relative;
+    }
+    
+    .progress-circle svg {
+        transform: rotate(-90deg);
+    }
+    
+    .progress-circle-back {
+        fill: none;
+        stroke: #e9ecef;
+        stroke-width: 10;
+    }
+    
+    .progress-circle-prog {
+        fill: none;
+        stroke: #ff6b35;
+        stroke-width: 10;
+        stroke-linecap: round;
+        stroke-dasharray: 565.48;
+        stroke-dashoffset: 565.48;
+        transition: stroke-dashoffset 0.7s ease;
+    }
+    
+    .progress-circle-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+    }
+    
+    .progress-circle-text h3 {
+        font-size: 2rem;
+        margin: 0;
+        color: #ff6b35;
+        font-weight: 700;
+    }
+    
+    .progress-circle-text p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        position: relative;
+    }
+    
+    .progress-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: #e9ecef;
+        z-index: 1;
+    }
+    
+    .progress-step {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .progress-step-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .progress-step.active .progress-step-icon {
+        background-color: #ff6b35;
+        color: white;
+    }
+    
+    .progress-step.completed .progress-step-icon {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .progress-step p {
+        font-size: 0.85rem;
+        margin: 0;
+        color: #6c757d;
+    }
+    
+    .progress-step.active p,
+    .progress-step.completed p {
+        color: #212529;
+        font-weight: 500;
+    }
+    
+    .order-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .order-item:last-child {
+        border-bottom: none;
+    }
+    
+    .order-item-img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 1rem;
+    }
+    
+    .order-item-details {
+        flex: 1;
+    }
+    
+    .order-item-price {
+        font-weight: 600;
+        color: #ff6b35;
+    }
+    
+    .delivery-notice {
+        background-color: #e7f5ff;
+        border-left: 4px solid #339af0;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+    }
+    
+    .breadcrumb {
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 0.375rem;
+    }
+</style>
+
+<!-- Confirmation Header -->
+<section class="confirmation-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3">Order Confirmed!</h1>
+        <p class="lead">Thank you {{ order.full_name }}! Your order #{{ order.id }} is being processed.</p>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cart_summary' %}">Cart</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Order Confirmation</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mb-5">
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="progress-step completed" id="step1">
+            <div class="progress-step-icon">
+                <i class="bi bi-cart-check"></i>
+            </div>
+            <p>Order Placed</p>
+        </div>
+        <div class="progress-step active" id="step2">
+            <div class="progress-step-icon">
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+            <p>Processing</p>
+        </div>
+        <div class="progress-step" id="step3">
+            <div class="progress-step-icon">
+                <i class="bi bi-truck"></i>
+            </div>
+            <p>On the Way</p>
+        </div>
+        <div class="progress-step" id="step4">
+            <div class="progress-step-icon">
+                <i class="bi bi-house-check"></i>
+            </div>
+            <p>Delivered</p>
+        </div>
+    </div>
+    
+    <!-- Circular Progress Bar -->
+    <div class="progress-circle">
+        <svg viewBox="0 0 200 200">
+            <circle class="progress-circle-back" cx="100" cy="100" r="90"></circle>
+            <circle class="progress-circle-prog" cx="100" cy="100" r="90" id="progress-circle"></circle>
+        </svg>
+        <div class="progress-circle-text">
+            <h3 id="progress-percent">0%</h3>
+            <p id="progress-status">Processing</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Order Details -->
+        <div class="col-lg-6">
+            <div class="confirmation-card">
+                <div class="card-header">
+                    Order Details
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Order ID:</div>
+                        <div class="col-sm-8">#{{ order.id }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Date:</div>
+                        <div class="col-sm-8">{{ order.date_ordered }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Total Paid:</div>
+                        <div class="col-sm-8">${{ order.amount_paid }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 fw-bold">Shipping Address:</div>
+                        <div class="col-sm-8">{{ order.address }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="delivery-notice">
+                <h5><i class="bi bi-clock me-2"></i>Estimated Delivery Time</h5>
+                <p class="mb-0">30-45 minutes</p>
+            </div>
+        </div>
+        
+        <!-- Order Items -->
+        <div class="col-lg-6">
+            <div class="confirmation-card">
+                <div class="card-header">
+                    Order Items
+                </div>
+                <div class="card-body p-0">
+                    {% for item in order_items %}
+                    <div class="order-item">
+                        <img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}https://via.placeholder.com/70x70?text=No+Image{% endif %}" 
+                             alt="{{ item.product.name }}" class="order-item-img">
+                        <div class="order-item-details">
+                            <h6 class="mb-1">{{ item.product.name }}</h6>
+                            <p class="text-muted mb-0">Quantity: {{ item.quantity }}</p>
+                        </div>
+                        <div class="order-item-price">
+                            ${{ item.price }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS Progress Simulation -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let progressCircle = document.getElementById("progress-circle");
+        let progressPercent = document.getElementById("progress-percent");
+        let progressStatus = document.getElementById("progress-status");
+        let progressSteps = document.querySelectorAll('.progress-step');
+        let progress = 0;
+        let circumference = 565.48; // 2 * π * r (where r=90)
+
+        // 1% every 600ms = ~60 seconds total
+        let interval = setInterval(() => {
+            if (progress >= 100) {
+                clearInterval(interval);
+                progressStatus.innerText = "Order confirmed!";
+                
+                // Update progress steps
+                progressSteps[1].classList.remove('active');
+                progressSteps[1].classList.add('completed');
+                progressSteps[2].classList.add('active');
+            } else {
+                progress += 1; // increase by 1%
+                let offset = circumference - (progress / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+                progressPercent.innerText = progress + "%";
+                
+                // Update text based on progress
+                if (progress >= 50 && progress < 100) {
+                    progressStatus.innerText = "Almost done...";
+                }
+            }
+        }, 600); // interval
+    });
+</script>
+
+{% endblock %}
