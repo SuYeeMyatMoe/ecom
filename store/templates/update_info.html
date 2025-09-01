@@ -148,7 +148,8 @@
                                 <form method="POST" action="{% url 'update_info' %}">
                                     {% csrf_token %}
                                     {{form.as_p}}
-                                  
+
+                                    {{ delivery_form.as_p }}
                                     <button type="submit" class="btn btn-register">Update</button>  
                                 </form>
                             </div>

@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, UserInfoForm
+from payment.forms import DeliveryForm# from payment forms.py
+
 from django import forms
 from django.core.paginator import Paginator
 import json
@@ -150,7 +152,7 @@ def update_info(request):
             messages.success(request, "Your delivery info has been updated!")
             return redirect('home')
 
-        return render(request, 'update_info.html', {'form': form})
+        return render(request, 'update_info.html', {'form': form, 'delivery_form':delivery_form})
 
     else:
         messages.error(request, "Please login to update your delivery info.")

@@ -6,7 +6,7 @@ class DeliveryForm(forms.ModelForm):
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'Full Name'
         }),
         required=True
     )
@@ -14,7 +14,7 @@ class DeliveryForm(forms.ModelForm):
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'Email Address'
         }),
         required=True
     )
@@ -22,7 +22,7 @@ class DeliveryForm(forms.ModelForm):
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'Address'
         }),
         required=True
     )
@@ -30,17 +30,17 @@ class DeliveryForm(forms.ModelForm):
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'City'
         }),
-        required=True
+        required=False
     )
     delivery_state= forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'State'
         }),
-        required=True
+        required=False
     )
     delivery_zipcode= forms.CharField(
         label="",
@@ -50,6 +50,12 @@ class DeliveryForm(forms.ModelForm):
         }),
         required=True
     )
+
+    class Meta:
+        model= DeliveryAddress
+        fields= ['full_name','email','deliver_address','deliver_city','deliver_zipcode']#from model
+
+        exclude= ['user',]
 
 
 
