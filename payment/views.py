@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from cart.cart import Cart#access cart from this page
 from decimal import Decimal
 from .forms import DeliveryForm
-from .models import DeliveryAddress
+from .models import DeliveryAddress, Order,OrderItem
 from store.models import Product
 from payment.forms import PaymentForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 # Create your views here.
 def payment_success(request):
@@ -55,13 +56,16 @@ def checkout(request):
             delivery.user = current_user
         delivery.save()
 
-        # ✅ Store delivery info in session
+        # Store delivery info in session
         request.session["my_delivery"] = {
+            "full_name": delivery.full_name,
+            "email": delivery.email,
             "deliver_address": delivery.deliver_address,
             "deliver_city": delivery.deliver_city,
             "deliver_state": delivery.deliver_state,
             "deliver_zipcode": delivery.deliver_zipcode,
         }
+
         request.session.modified = True  # make sure it's written
 
         messages.success(request, "Delivery information saved. Continue to billing.")
@@ -123,6 +127,23 @@ def billing_info(request):
     })
 
 def process_order(request):
+    cart = Cart(request)
+    cart_products = cart.get_items()
+    cart_quantity = cart.get_quants()
+
+    subtotal = Decimal("0.00")
+    for product in cart_products:
+        qty = cart_quantity.get(str(product.id), 0)
+        if product.is_sale:
+            subtotal += Decimal(qty) * product.sale_price
+        else:
+            subtotal += Decimal(qty) * product.price
+
+    delivery_fee = Decimal("5.00")
+    tax_rate = Decimal("0.06")
+    tax = (subtotal * tax_rate).quantize(Decimal("0.01"))
+    cart_total = subtotal + delivery_fee + tax
+
     my_delivery = request.session.get("my_delivery")
     billing = request.session.get("billing_info")
 
@@ -130,16 +151,42 @@ def process_order(request):
         messages.error(request, "Missing delivery or billing information.")
         return redirect("checkout")
 
-    # # Print to console (will show in runserver logs)
-    # print("Delivery:", my_delivery)
-    # print("Billing:", billing)
+    full_name = my_delivery["full_name"]
+    email = my_delivery["email"]
+    delivery_address = (
+        f"{my_delivery['deliver_address']}\n"
+        f"{my_delivery['deliver_city']}\n"
+        f"{my_delivery['deliver_state']}\n"
+        f"{my_delivery['deliver_zipcode']}"
+    )
 
-    #gather order info
-    
+    # Save order
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = None
 
-    delivery_address = f"{my_delivery['deliver_address']}\n{my_delivery['deliver_city']}\n{my_delivery['deliver_state']}\n{my_delivery['deliver_zipcode']}"
-    print("Formatted Address:", delivery_address)
+    create_order = Order.objects.create(
+        user=user,
+        full_name=full_name,
+        email=email,
+        address=delivery_address,
+        amount_paid=cart_total
+    )
+
+    # Save order items
+    for product in cart_products:
+        qty = cart_quantity.get(str(product.id), 0)
+        price = product.sale_price if product.is_sale else product.price
+        OrderItem.objects.create(
+            order=create_order,
+            product=product,
+            user=user,
+            quantity=qty,
+            price=price
+        )
 
     messages.success(request, "Your order is successfully placed")
     return redirect("home")
+
 
