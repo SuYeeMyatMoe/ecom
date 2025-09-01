@@ -143,12 +143,12 @@
                         <div class="col-lg-6">
                             <div class="register-right">
                                 <a class="brand-logo">FoodExpress</a>
-                                <h2 class="mb-4">Update Delivery Info</h2>
+                                <h4 class="mb-4">Update Delivery Info</h4>
                                 
                                 <form method="POST" action="{% url 'update_info' %}">
                                     {% csrf_token %}
                                     {{form.as_p}}
-
+                                    <h4 class="mb-4">Delivery Info Details </h4>
                                     {{ delivery_form.as_p }}
                                     <button type="submit" class="btn btn-register">Update</button>  
                                 </form>

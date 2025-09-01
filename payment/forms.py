@@ -2,7 +2,7 @@ from django import forms
 from .models import DeliveryAddress
 
 class DeliveryForm(forms.ModelForm):
-    delivery_full_name= forms.CharField(
+    full_name = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -10,15 +10,15 @@ class DeliveryForm(forms.ModelForm):
         }),
         required=True
     )
-    delivery_email= forms.CharField(
+    email = forms.EmailField(
         label="",
-        widget=forms.TextInput(attrs={
+        widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email Address'
         }),
         required=True
     )
-    delivery_address= forms.CharField(
+    address = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -26,7 +26,7 @@ class DeliveryForm(forms.ModelForm):
         }),
         required=True
     )
-    delivery_city= forms.CharField(
+    city = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -34,7 +34,7 @@ class DeliveryForm(forms.ModelForm):
         }),
         required=False
     )
-    delivery_state= forms.CharField(
+    state = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -42,20 +42,19 @@ class DeliveryForm(forms.ModelForm):
         }),
         required=False
     )
-    delivery_zipcode= forms.CharField(
+    zipcode = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Phone'
+            'placeholder': 'Zip / Phone'
         }),
         required=True
     )
 
     class Meta:
-        model= DeliveryAddress
-        fields= ['full_name','email','deliver_address','deliver_city','deliver_zipcode']#from model
-
-        exclude= ['user',]
+        model = DeliveryAddress
+        fields = ['full_name', 'email', 'address', 'city', 'state', 'zipcode']
+        exclude = ['user']
 
 
 
