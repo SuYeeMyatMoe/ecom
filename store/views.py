@@ -7,7 +7,7 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, UserInfoForm
 from payment.forms import DeliveryForm# from payment forms.py
-
+from payment.models import DeliveryAddress#from payment model.p file
 from django import forms
 from django.core.paginator import Paginator
 import json
@@ -44,8 +44,8 @@ def login_user(request):
             login(request,user)#login builtin function 
 
             #do shopping cart stuff
+            #get current user
             current_user=Profile.objects.get(user__id=request.user.id)
-
             #get their saved cart from dbs
             saved_cart=current_user.old_cart
 
@@ -144,8 +144,14 @@ def update_info(request):
         current_user = request.user
         # get or create Profile linked with the user
         profile, created = Profile.objects.get_or_create(user=current_user)
+        #get current user delivery info
+        delivery_user= DeliveryAddress.objects.get(id=request.user.id)
 
+        #get org user form
         form = UserInfoForm(request.POST or None, instance=profile)
+
+        #get user delivery form
+        delivery_form=DeliveryForm(request.POST or None,instance=delivery_user)
 
         if form.is_valid():
             form.save()
