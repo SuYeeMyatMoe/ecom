@@ -1,63 +1,6 @@
 from django import forms
 from .models import DeliveryAddress
 
-class DeliveryForm(forms.ModelForm):
-    full_name = forms.CharField(
-        label="",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Full Name'
-        }),
-        required=True
-    )
-    email = forms.EmailField(
-        label="",
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Email Address'
-        }),
-        required=True
-    )
-    address = forms.CharField(
-        label="",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Address'
-        }),
-        required=True
-    )
-    city = forms.CharField(
-        label="",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'City'
-        }),
-        required=False
-    )
-    state = forms.CharField(
-        label="",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'State'
-        }),
-        required=False
-    )
-    zipcode = forms.CharField(
-        label="",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Zip / Phone'
-        }),
-        required=True
-    )
-
-    class Meta:
-        model = DeliveryAddress
-        fields = ['full_name', 'email', 'address', 'city', 'state', 'zipcode']
-        exclude = ['user']
-
-
-
 class PaymentForm(forms.Form):
     card_name = forms.CharField(
         label="Name on Card",
@@ -150,5 +93,55 @@ class PaymentForm(forms.Form):
             "placeholder": "United States"
         })
     )
+
+    
+class DeliveryForm(forms.ModelForm):
+
+    full_name = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Full Name'}),
+        required=True
+    )
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}),
+        required=True
+    )
+    deliver_address = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}),
+        required=True
+    )
+    deliver_city = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
+        required=False
+    )
+    deliver_state = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}),
+        required=False
+    )
+    deliver_zipcode = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zip / Phone'}),
+        required=True
+    )
+
+    class Meta:   # ← only 1 indent here
+        model = DeliveryAddress
+        fields = [
+            'full_name',
+            'email',
+            'deliver_address',
+            'deliver_city',
+            'deliver_state',
+            'deliver_zipcode',
+        ]
+        exclude = ['user']
+
+
+
+
 
 

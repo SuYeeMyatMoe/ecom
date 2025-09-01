@@ -142,24 +142,31 @@ def update_user(request):
 def update_info(request):
     if request.user.is_authenticated:
         current_user = request.user
-        # get or create Profile linked with the user
         profile, created = Profile.objects.get_or_create(user=current_user)
-        #get current user delivery info
-        delivery_user= DeliveryAddress.objects.get(id=request.user.id)
 
-        #get org user form
+        # FIX: Use filter().first() so it doesn't throw error if DeliveryAddress doesn't exist
+        delivery_user = DeliveryAddress.objects.filter(user=current_user).first()
+
+        # If no DeliveryAddress exists, create one linked to user
+        if not delivery_user:
+            delivery_user = DeliveryAddress.objects.create(user=current_user)
+
         form = UserInfoForm(request.POST or None, instance=profile)
+        delivery_form = DeliveryForm(request.POST or None, instance=delivery_user)
 
-        #get user delivery form
-        delivery_form=DeliveryForm(request.POST or None,instance=delivery_user)
+        if request.method == "POST":
+            if form.is_valid() and delivery_form.is_valid():
+                form.save()
+                delivery_form.save()
+                messages.success(request, "Your profile and delivery info have been updated!")
+                return redirect('home')
 
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your delivery info has been updated!")
-            return redirect('home')
-
-        return render(request, 'update_info.html', {'form': form, 'delivery_form':delivery_form})
+        return render(request, 'update_info.html', {
+            'form': form,
+            'delivery_form': delivery_form
+        })
 
     else:
         messages.error(request, "Please login to update your delivery info.")
         return redirect('login')
+
